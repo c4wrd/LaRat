@@ -1,3 +1,7 @@
+<!--
+Open source project located at https://github.com/tschoffelen/db.php
+__>
+
 <?php
     // MySQL Database interface class
     class DB {

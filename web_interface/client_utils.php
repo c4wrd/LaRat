@@ -25,7 +25,7 @@ if ( isset ($_GET['clientId']) ) {
     $response['errorMessage'] = "There are no clients that have used the application";
   }
   echo $response;
-  
+
 } else {
   $response['status'] = 'failed';
   $response['message'] = 'Client ID must be supplied';
