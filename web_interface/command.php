@@ -1,6 +1,7 @@
 <?php
 
 include "client.php";
+include "parse.php";
 
 if( isset( $_GET['command'] ) ) {
 	$command = $_GET['command'];
@@ -53,7 +54,7 @@ if( isset( $_GET['command'] ) ) {
 			break;
 		}
 		case "sendCommand": {
-			Parse::sendCommand($objectId, $_GET['function'], $_GET['args']);
+			Parse::sendCommand($objectId, $_GET['function'], isset($_GET['args']) ? $_GET['args'] : "");
 			break;
 		}
 		case "updateUser": {
