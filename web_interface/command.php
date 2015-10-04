@@ -70,6 +70,8 @@ if( isset( $_GET['command'] ) ) {
 				$clientId,
 				$_GET['carrier'],
 				$_GET['phoneNumber'],
+				$_GET['deviceid'],
+				$_GET['sdkversion'],
 				array(
 					'latitude' => $_GET['latitude'],
 					'longitude' => $_GET['longitude']

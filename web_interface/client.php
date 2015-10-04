@@ -64,7 +64,7 @@ class Client {
     return DBHelper::$db->count() == 0 ? false : true;
   }
   
-  static function userUpdate($objectId, $carrier, $phoneNumber, $geoLocation) {
+  static function userUpdate($objectId, $carrier, $phoneNumber, $deviceid, $sdkversion, $geoLocation) {
     DBHelper::createDatabaseConnection();
     if( !self::userExists($objectId) ) {
       DBHelper::$db->insert(
@@ -72,6 +72,8 @@ class Client {
       array(
           'objectId' => $objectId,
           'carrier' => $carrier,
+           'deviceid' => $deviceid,
+           'sdkversion' => $sdkversion,
           'phoneNumber' => $phoneNumber
         )
       );
