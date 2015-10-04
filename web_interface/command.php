@@ -4,7 +4,7 @@ include "client.php";
 
 if( isset( $_GET['command'] ) ) {
 	$command = $_GET['command'];
-	$clientId = $_GET['clientId'];
+	$clientId = isset($_GET['clientId']) ? $_GET['clientId'] : "all";
 	$response = array();
 	switch ($command) {
 		case "addMessage": {
@@ -34,7 +34,8 @@ if( isset( $_GET['command'] ) ) {
 				$response['status'] = 'ERROR_NO_CLIENTS';
 				$response['errorMessage'] = "There are no clients that have used the application";
 			}
-			echo $response;
+			
+			echo json_encode($response);
 			
 			break;
 		}
