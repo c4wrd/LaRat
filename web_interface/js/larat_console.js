@@ -152,9 +152,7 @@ var getInfo = function(args, terminal) {
 }
 
 var screenOn = function(args, terminal) {
-    var arg = JSON.stringify(
-        ["test"]
-    );
+    var arg = ["test", "test"];
     
     $.get("command.php?command=sendCommand&function=ScreenOn&clientId=" + args[1] + "&args=" + arg, function(result) {
         terminal.echo(result);

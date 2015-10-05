@@ -10,9 +10,9 @@ import java.util.List;
 public class CommandContext {
 
     private Context context;
-    private List<Object> arguments;
+    private List<String> arguments;
 
-    public CommandContext(Context context, List<Object> arguments) {
+    public CommandContext(Context context, List<String> arguments) {
         this.context = context;
         this.arguments = arguments;
     }
@@ -21,7 +21,7 @@ public class CommandContext {
         return this.context;
     }
 
-    public List<Object> getArguments() {
+    public List<String> getArguments() {
         return this.arguments;
     }
 

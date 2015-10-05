@@ -38,14 +38,14 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
         Command.initCommands();
         JsonObject data = getDataFromIntent(intent);
         String command = null;
-        List<Object> arguments = new LinkedList<Object>();
+        List<String> arguments = new LinkedList<String>();
 
         try {
             command = data.get("command").getAsString();
             if(data.has("args")) {
-                JsonArray args = data.getAsJsonArray("args");
-                for (int i = 0; i < args.size(); i++) {
-                    Object arg = args.get(i);
+                String[] args = data.get("args").getAsString().split(","); //comma seperated arguments
+                for (int i = 0; i < args.length; i++) {
+                    String arg = args[i];
                     arguments.add(arg);
                 }
             }
