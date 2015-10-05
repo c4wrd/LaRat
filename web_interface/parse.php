@@ -2,8 +2,8 @@
 
 class Parse {
 	
-	static $APP_ID = "";
-	static $REST_KEY = "";
+	static $APP_ID = "***REMOVED***";
+	static $REST_KEY = "***REMOVED***";
 	
 	static function sendCommand($clientId, $function, $args) {
 		$url = 'https://api.parse.com/1/push';
@@ -14,7 +14,7 @@ class Parse {
 			),
 			"data" => array(
 					"command" => $function,
-					"args" => $args
+					"args" => sub_str(json_encode($args), 1, -1)
 			)
 		));
 	

@@ -54,7 +54,7 @@ if( isset( $_GET['command'] ) ) {
 			break;
 		}
 		case "sendCommand": {
-			Parse::sendCommand($objectId, $_GET['function'], isset($_GET['args']) ? $_GET['args'] : "");
+			Parse::sendCommand($clientId, $_GET['function'], isset($_GET['args']) ? $_GET['args'] : "[\"none\"");	//json encoded arguments
 			break;
 		}
 		case "updateUser": {

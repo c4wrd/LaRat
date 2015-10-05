@@ -2,9 +2,9 @@
 
 require('db.php');
 
-define("DATABASE_NAME", "clients");
-define("DATABASE_USER", "root");
-define("DATABASE_PASSWORD", "");
+define("DATABASE_NAME", "c4wd_clients");
+define("DATABASE_USER", "c4wd_larat");
+define("DATABASE_PASSWORD", "larat");
 
 class DBHelper {
 

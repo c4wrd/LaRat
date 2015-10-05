@@ -151,6 +151,16 @@ var getInfo = function(args, terminal) {
     });
 }
 
+var screenOn = function(args, terminal) {
+    var arg = JSON.stringify(
+        ["test"]
+    );
+    
+    $.get("command.php?command=sendCommand&function=ScreenOn&clientId=" + args[1] + "&args=" + arg, function(result) {
+        terminal.echo(result);
+    });
+}
+
 commandList["get"] = getClients;
 commandList["add"] = add;
 commandList["rm"] = rmv;
@@ -158,3 +168,4 @@ commandList["ssh"] = ssh;
 commandList["toast"] = toast;
 commandList['list'] = list;
 commandList['info'] = getInfo;
+commandList['screenon'] = screenOn;
