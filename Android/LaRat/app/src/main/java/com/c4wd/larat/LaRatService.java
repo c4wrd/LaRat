@@ -56,27 +56,9 @@ public class LaRatService extends android.app.Service {
             Constants.setupInternals(getApplicationContext());
         }
 
-        Constants.updateLocation(getApplicationContext());
-
         Log.i("com.c4wrd", "Start MyService");
         if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ClientID", "") == null || PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("AndroidID", "").equals("")) {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ClientID", Constants.CLIENT_ID).commit();
         }
-
-        RequestParams params = new RequestParams();
-        params.put("command", "userUpdate");
-        params.put("clientId", Constants.CLIENT_ID);
-        params.put("carrier", Constants.PROVIDER);
-        params.put("phoneNumber", Constants.PHONE_NUMBER);
-        params.put("deviceid", Constants.DEVICE_ID);
-        params.put("sdkversion", Constants.SDK_VERSION);
-        if(Constants.LAST_LOCATION != null) {
-            params.put("latitude", Constants.LAST_LOCATION.getLatitude());
-            params.put("longitude", Constants.LAST_LOCATION.getLongitude());
-        } else {
-            params.put("latitude", 0.0);
-            params.put("longitude", 0.0);
-        }
-        RestClient.get("command.php", params, new RestClient.DefaultJsonHandler());
     }
 }

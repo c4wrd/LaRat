@@ -14,6 +14,7 @@ public class LaRatActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+
         if (!LaRatServiceReceiver.IsServiceRunning(getApplicationContext())) {
             startService(new Intent(getApplicationContext(), LaRatService.class));
             Log.i("com.c4wd.larat", "Starting the LaRat service...");
