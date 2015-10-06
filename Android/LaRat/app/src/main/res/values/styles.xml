@@ -1,5 +1,4 @@
 <resources>
-
     <style name="AppTheme" parent="android:Theme.Light" />
     <style name="Invisible" parent="@android:style/Theme">
         <item name="android:windowBackground">@android:color/transparent</item>

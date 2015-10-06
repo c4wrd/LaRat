@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class Command {
         Command.commandList = new HashMap<String, AsyncTask>();
 
         commandList.put("ScreenOn", new ScreenOnTask());
+        commandList.put("Toast", new ToastTask());
     }
 
     public static class ScreenOnTask extends AsyncTask<Object, Void, String> {
@@ -43,5 +45,23 @@ public class Command {
         protected void onPreExecute() {}
         @Override
         protected void onProgressUpdate(Void... values) {}
+    }
+
+    public static class ToastTask extends AsyncTask<Object, Void, Object> {
+
+        private CommandContext context;
+
+        @Override
+        protected Object doInBackground(Object... objects) {
+            context = (CommandContext)objects[0];
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            Toast.makeText(context.getContext(),
+                    context.getArgument(0).toString(),
+                    context.getArgument(1).toString().equals("LONG") ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+        }
     }
 }
