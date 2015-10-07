@@ -1,4 +1,4 @@
-package com.larat.opengl;
+package com.larat.drawing;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
@@ -11,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 
-class OpenGLRenderer implements GLSurfaceView.Renderer {
+public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
     private Cube mCube = new Cube();
     private float mCubeRotation;

@@ -1,4 +1,4 @@
-package com.larat.opengl;
+package com.larat.drawing;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

