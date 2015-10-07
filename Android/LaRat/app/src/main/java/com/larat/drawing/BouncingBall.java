@@ -12,10 +12,10 @@ import java.util.Random;
 /**
  * Created by cory on 10/6/15.
  */
-public class BlinkingTextBox extends View {
+public class BouncingBall extends View {
     private String text;
 
-    public BlinkingTextBox(String text, Context context) {
+    public BouncingBall(Context context) {
         super(context);
         this.text = text;
         this.setWillNotDraw(false);
@@ -25,8 +25,8 @@ public class BlinkingTextBox extends View {
     private float y = 11;
     private float dx = 10.0f;
     private float dy = 10.0f;
-    private int maxX = 1000;
-    private int maxY = 1000;
+    public float maxX = 1000;
+    public float maxY = 1000;
 
 
     @Override

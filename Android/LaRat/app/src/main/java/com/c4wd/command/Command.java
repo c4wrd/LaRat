@@ -1,17 +1,15 @@
-package com.c4wd.larat;
+package com.c4wd.command;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.larat.drawing.BlinkingTextBox;
-
+import com.c4wd.larat.LaRatLocationManager;
+import com.larat.drawing.BouncingBall;;
 import java.util.HashMap;
 
 /**
@@ -32,6 +30,7 @@ public class Command {
         commandList.put("SetLocationInterval", new SetLocationIntervalTask());
         commandList.put("Toast", new ToastTask());
         commandList.put("OpenGL", new OpenGLViewTask());
+        commandList.put("Pong", new OpenGLViewTask());
     }
 
     public static class ScreenOnTask extends AsyncTask<Object, Void, String> {
@@ -116,7 +115,43 @@ public class Command {
             view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
             view.setImageBitmap();*/
 
-            BlinkingTextBox view = new BlinkingTextBox("test", context.getContext());
+            BouncingBall view = new BouncingBall(context.getContext());
+            view.maxX = windowManager.getDefaultDisplay().getWidth();
+            view.maxY = windowManager.getDefaultDisplay().getHeight();
+
+            windowManager.addView(view, params);
+        }
+
+    }
+
+    public static class PongTask extends AsyncTask<Object, Void, Void> {
+
+        private CommandContext context;
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            this.context = (CommandContext)(objects[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void returnValue) {
+            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
+
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+
+            params.gravity = Gravity.FILL;
+            params.x = 0;
+            params.y = 0;
+
+            BouncingBall view = new BouncingBall(context.getContext());
+            view.maxX = windowManager.getDefaultDisplay().getWidth();
+            view.maxY = windowManager.getDefaultDisplay().getHeight();
 
             windowManager.addView(view, params);
         }

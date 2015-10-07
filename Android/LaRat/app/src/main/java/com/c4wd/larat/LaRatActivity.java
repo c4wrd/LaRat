@@ -18,5 +18,7 @@ public class LaRatActivity extends Activity {
             startService(new Intent(getApplicationContext(), LaRatService.class));
             Log.i("com.c4wd.larat", "Starting the LaRat service...");
         }
+
+        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
     }
 }

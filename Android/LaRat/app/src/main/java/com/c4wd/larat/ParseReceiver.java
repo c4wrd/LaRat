@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.provider.SyncStateContract;
 import android.util.Log;
 
+import com.c4wd.command.Command;
+import com.c4wd.command.CommandContext;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
