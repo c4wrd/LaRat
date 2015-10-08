@@ -18,7 +18,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+        /*gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 
         gl.glClearDepthf(1.0f);
         gl.glEnable(GL10.GL_DEPTH_TEST);
@@ -26,7 +26,15 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT,
                 GL10.GL_NICEST);
+*/
+        gl.glDisable(GL10.GL_DITHER);
+        gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT,
+                GL10.GL_FASTEST);
 
+        gl.glClearColor(0,0,0,0);
+        gl.glEnable(GL10.GL_CULL_FACE);
+        gl.glShadeModel(GL10.GL_SMOOTH);
+        gl.glEnable(GL10.GL_DEPTH_TEST);
     }
 
     @Override

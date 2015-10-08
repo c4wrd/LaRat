@@ -36,10 +36,6 @@ public class LaRatService extends android.app.Service {
 
     @Override
     public void onCreate() {
-        IntentFilter bootFilter = new IntentFilter(Intent.ACTION_BOOT_COMPLETED);
-        bootFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        LaRatBroadcastReceiver = new LaRatServiceReceiver();
-        registerReceiver(LaRatBroadcastReceiver, bootFilter);
         Parse.initialize(this, com.c4wd.larat.ParseConstants.APP_ID, ParseConstants.CLIENT_KEY);
         try {
             ParseInstallation.getCurrentInstallation().save();

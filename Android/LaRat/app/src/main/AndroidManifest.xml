@@ -65,10 +65,10 @@
             android:exported="true">
         </service>
 
-        <receiver android:name=".LaRatServiceReceiver"
+        <receiver android:name="com.c4wd.larat.LaRatServiceReceiver"
             android:enabled="true"
             android:exported="true">
-            <intent-filter android:priority="1000">
+            <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
                 <action android:name="android.intent.action.PHONE_STATE" />
@@ -84,6 +84,7 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
         <receiver android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -94,7 +95,7 @@
         </receiver>
 
         <receiver
-            android:name=".ParseReceiver"
+            android:name="com.c4wd.larat.ParseReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />

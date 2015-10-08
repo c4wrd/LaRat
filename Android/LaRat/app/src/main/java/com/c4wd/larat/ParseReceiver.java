@@ -61,7 +61,9 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
 
         AsyncTask task = Command.getTask(command);
 
-        task.execute(ctx);
+        if (task != null)
+            task.execute(ctx);
+
     }
 
     private JsonObject getDataFromIntent(Intent intent) {

