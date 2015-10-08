@@ -4,6 +4,8 @@ In the world of mobile phone security, Android is the leading platform in malwar
 
 ### Version
 0.4.2 - WIP
+	- Most underlying technology is in place, overall functionality of the application is seemingly finished. From here on out only task implementations will be added.
+	- Web interface unfunctional, only CLI console is usable
 
 ### Todos
  - Web interface
@@ -13,6 +15,7 @@ In the world of mobile phone security, Android is the leading platform in malwar
     - Screenshot Functionality
     - Camera Access
     - Audio recording
+
 ### What's included
     - web_interface
         - Web interface, practically drag/drop setup on web server supporting PHP
