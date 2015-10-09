@@ -1,4 +1,4 @@
-package com.larat.drawing;
+package com.c4wd.drawing;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.Random;
 

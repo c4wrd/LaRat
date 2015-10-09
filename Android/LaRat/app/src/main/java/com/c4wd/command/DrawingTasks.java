@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.c4wd.drawing.BouncingBall;
+import com.c4wd.drawing.OpenGLRenderer;
+import com.c4wd.drawing.OverlayService;
 import com.c4wd.larat.R;
-import com.larat.drawing.BouncingBall;
-import com.larat.drawing.OpenGLRenderer;
-import com.larat.drawing.OverlayService;
 
 /**
  * Created by cory on 10/7/15.

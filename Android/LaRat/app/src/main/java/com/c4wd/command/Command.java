@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.c4wd.larat.LaRatLocationManager;
 import com.c4wd.larat.LaRatService;
 import com.c4wd.larat.R;
-import com.larat.drawing.BouncingBall;;
+import com.c4wd.drawing.BouncingBall;
 import java.security.acl.LastOwnerException;
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.larat.drawing;
+package com.c4wd.drawing;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;

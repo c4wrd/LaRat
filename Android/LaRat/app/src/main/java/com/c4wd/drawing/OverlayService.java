@@ -1,10 +1,9 @@
-package com.larat.drawing;
+package com.c4wd.drawing;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 /**

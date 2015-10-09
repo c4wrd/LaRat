@@ -11,7 +11,6 @@ import com.c4wd.command.Command;
 import com.c4wd.command.CommandContext;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class LaRatActivity extends Activity {
 
