@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.c4wd.larat.R;
 import com.larat.drawing.BouncingBall;
 import com.larat.drawing.OpenGLRenderer;
+import com.larat.drawing.OverlayService;
 
 /**
  * Created by cory on 10/7/15.
@@ -37,26 +38,16 @@ public class DrawingTasks {
 
         @Override
         protected void onPostExecute(Void returnValue) {
-            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
-
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-
-            params.gravity = Gravity.FILL;
-            params.x = 0;
-            params.y = 0;
+            OverlayService overlayService = new OverlayService(context.getContext());
 
             GLSurfaceView view = new GLSurfaceView(context.getContext());
-            view.setRenderer(new OpenGLRenderer());
+            view.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
             view.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+            view.setRenderer(new OpenGLRenderer());
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(80, 80);
             view.setLayoutParams(layoutParams);
 
-            windowManager.addView(view, params);
+            overlayService.addView(view);
         }
 
     }
@@ -73,26 +64,13 @@ public class DrawingTasks {
 
         @Override
         protected void onPostExecute(Void returnValue) {
-            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
-
-
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    LayoutParamFlags,
-                    PixelFormat.TRANSLUCENT);
-
-
-            params.gravity = Gravity.FILL;
-            params.x = 0;
-            params.y = 0;
+            OverlayService overlayService = new OverlayService(context.getContext());
 
             BouncingBall view = new BouncingBall(context.getContext());
-            view.maxX = windowManager.getDefaultDisplay().getWidth();
-            view.maxY = windowManager.getDefaultDisplay().getHeight();
+            view.maxX = overlayService.getWindowManager().getDefaultDisplay().getWidth();
+            view.maxY = overlayService.getWindowManager().getDefaultDisplay().getHeight();
 
-            windowManager.addView(view, params);
+            overlayService.addView(view);
         }
 
     }
@@ -109,25 +87,15 @@ public class DrawingTasks {
 
         @Override
         protected void onPostExecute(Void returnValue) {
-            WindowManager windowManager = (WindowManager) this.context.getContext().getSystemService(Context.WINDOW_SERVICE);
-
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    LayoutParamFlags,
-                    PixelFormat.TRANSLUCENT);
-
-            params.gravity = Gravity.CENTER;
-            params.x = 0;
-            params.y = 0;
+            OverlayService overlayService = new OverlayService(context.getContext());
+            overlayService.setGravity(Gravity.CENTER);
 
             ImageView view = new ImageView(context.getContext());
             Bitmap bm = BitmapFactory.decodeResource(context.getContext().getResources(), R.drawable.crack);
             view.setImageBitmap(bm);
             view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
 
-            windowManager.addView(view, params);
+            overlayService.addView(view);
         }
     }
 }

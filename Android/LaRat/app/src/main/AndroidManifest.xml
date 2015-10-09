@@ -3,7 +3,7 @@
     package="com.c4wd.larat" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="18"/>
 
     <supports-screens android:resizeable="true"
