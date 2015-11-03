@@ -3,6 +3,10 @@
 include "client.php";
 include "parse.php";
 
+/* TODO
+	Remove ''userUpdate' and place in it's own file. Goal is to seperate client and command server funcs.
+*/
+
 if( isset( $_GET['command'] ) ) {
 	$command = $_GET['command'];
 	$clientId = isset($_GET['clientId']) ? $_GET['clientId'] : "all";

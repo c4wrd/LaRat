@@ -55,6 +55,4 @@ public class BouncingBall extends View {
         this.invalidate();
     }
 
-
-
 }

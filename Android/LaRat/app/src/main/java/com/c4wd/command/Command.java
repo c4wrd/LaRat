@@ -1,23 +1,12 @@
 package com.c4wd.command;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.PowerManager;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.c4wd.larat.LaRatLocationManager;
-import com.c4wd.larat.LaRatService;
-import com.c4wd.larat.R;
-import com.c4wd.drawing.BouncingBall;
-import java.security.acl.LastOwnerException;
+
 import java.util.HashMap;
 
 /**
