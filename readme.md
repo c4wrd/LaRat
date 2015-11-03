@@ -3,18 +3,19 @@
 In the world of mobile phone security, Android is the leading platform in malware. There is no limit to the damage that can be caused to a phone, simply by installing an app. LaRat was built PURELY for demonstration of security flaws within Android. This project was built roughly in a week for a project in my Computer Ethics course at Montana State University and was not built for malicuous intentions!
 
 ### Version
-0.4.2 - WIP
+0.5.2 - WIP
 	- Most underlying technology is in place, overall functionality of the application is seemingly finished. From here on out only task implementations will be added.
 	- Web interface unfunctional, only CLI console is usable
+	- SMS not functional yet...
 
 ### Todos
  - Web interface
  - More task functionality
-    - Get messages (display in web interface)
+    - Get messages (display in web interface) *IN PROGRESS*
     - Propietary animation
-    - Screenshot Functionality
-    - Camera Access
-    - Audio recording
+    - Screenshot Functionality *RESEARCHING*
+    - Camera Access *CONTEMPLATING REMOVAL*
+    - Audio recording *CONTEMPLATING REMOVAL*
 
 ### What's included
     - web_interface
