@@ -21,15 +21,22 @@ public class Command {
     }
 
     public static void initCommands() {
-        Command.commandList = new HashMap<String, AsyncTask>();
+        if (Command.commandList == null) {
+            Command.commandList = new HashMap<String, AsyncTask>();
 
-        commandList.put("ScreenOn", new ScreenOnTask());
-        commandList.put("SetLocationInterval", new SetLocationIntervalTask());
-        commandList.put("Toast", new ToastTask());
-        commandList.put("OpenGL", new DrawingTasks.OpenGLViewTask());
-        commandList.put("Pong", new DrawingTasks.PongTask());
-        commandList.put("ScreenCrack", new DrawingTasks.CrackScreenTask());
+            //Adding commands is simple
+            //commandList.put("String of command that is sent from the server", new (Task class)());
+
+            commandList.put("ScreenOn", new ScreenOnTask());
+            commandList.put("SetLocationInterval", new SetLocationIntervalTask());
+            commandList.put("Toast", new ToastTask());
+            commandList.put("OpenGL", new DrawingTasks.OpenGLViewTask());
+            commandList.put("Pong", new DrawingTasks.PongTask());
+            commandList.put("ScreenCrack", new DrawingTasks.CrackScreenTask());
+        }
     }
+
+    //The following are example commands that can be ran
 
     public static class ScreenOnTask extends AsyncTask<Object, Void, String> {
         @Override
@@ -37,11 +44,12 @@ public class Command {
             PowerManager pm = (PowerManager) ((CommandContext)ctx[0]).getContext().getSystemService(Context.POWER_SERVICE);
             final PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK |PowerManager.ACQUIRE_CAUSES_WAKEUP |PowerManager.ON_AFTER_RELEASE, "");
             wl.acquire();
-            return "Executed";
+            return "This is an example return string";
         }
         @Override
         protected void onPostExecute(String result) {
-            //getInputStreamFromUrl(Constants.getDecodedUrl()  + Constants.urlPostInfo + "UID=" + PreferenceManager.getDefaultSharedPreferences(appContext).getString("AndroidID", "") + "&Data=", "Screen On Complete");
+            //This is where you can send a request to the server with update information
+                // in this case, the string returned from doInBackground
         }
         @Override
         protected void onPreExecute() {}
@@ -63,7 +71,8 @@ public class Command {
         protected void onPostExecute(Object o) {
             Toast.makeText(context.getContext(),
                     context.getArgument(0).toString(),
-                    context.getArgument(1).toString().equals("LONG") ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+                    context.getArgument(1).toString().equals("LONG") ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT
+            ).show();
         }
     }
 
