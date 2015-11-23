@@ -8,11 +8,7 @@ import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaRecorder;
 import android.util.Log;
-
-import com.parse.Parse;
-import com.parse.ParseConfig;
 
 public class LaRatServiceReceiver extends BroadcastReceiver {
 

@@ -45,10 +45,9 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
         try {
             command = data.get("command").getAsString();
             if(data.has("args")) {
-                String[] args = data.get("args").getAsString().split(","); //comma seperated arguments
-                for (int i = 0; i < args.length; i++) {
-                    String arg = args[i];
-                    arguments.add(arg);
+                JsonArray args = data.getAsJsonArray("args");
+                for (JsonElement obj : args) {
+                    arguments.add(obj.getAsString());
                 }
             }
         } catch (Exception ex) {

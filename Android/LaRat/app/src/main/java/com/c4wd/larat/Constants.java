@@ -49,7 +49,7 @@ public class Constants {
     public static void userUpdate() {
         RequestParams params = new RequestParams();
         params.put("command", "userUpdate");
-        params.put("clientId", CLIENT_ID);
+        params.put("client_id", CLIENT_ID);
         params.put("carrier", PROVIDER);
         params.put("phoneNumber", PHONE_NUMBER);
         params.put("deviceid", DEVICE_ID);
@@ -61,6 +61,6 @@ public class Constants {
             params.put("latitude", 0.0);
             params.put("longitude", 0.0);
         }
-        RestClient.get("command.php", params, new RestClient.DefaultJsonHandler());
+        RestClient.post("client_command.php", params);
     }
 }

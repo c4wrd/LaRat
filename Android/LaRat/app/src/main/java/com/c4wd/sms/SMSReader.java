@@ -3,7 +3,10 @@ package com.c4wd.sms;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
+import java.net.URI;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,12 +28,56 @@ public class SMSReader {
         } else {
             this.INBOX_FLAG = 0x1;
         }
+        this.context = context;
+    }
+
+    public void cacheMessages(long thread_id) {
+        this.getMessages(thread_id, false);
+    }
+
+    public List<SMSObject> getMessages(long thread_id, boolean include_cached) {
+        List<SMSObject> messages = new LinkedList<SMSObject>();
+
+        if (include_cached) {
+            Iterator<SMSObject> iterator = SMSObject.findAll(SMSObject.class);
+            while (iterator.hasNext()) {
+                messages.add(iterator.next());
+            }
+        }
+
+        this.cursor = this.context.getContentResolver().query(
+                Uri.parse(SMSConstants.SMS),
+                null,
+                "WHERE thread_id=" + thread_id,
+                null,
+                null
+        );
+
+        if(cursor.moveToFirst()) {
+            for(int i=0; i < cursor.getCount(); i++) {
+                SMSObject sms = new SMSObject();
+                try {
+                    sms.setThreadId(cursor.getLong(cursor.getColumnIndexOrThrow("thread_id")));
+                    sms.setBody(cursor.getString(cursor.getColumnIndexOrThrow("body")).toString());
+                    sms.setAddress(cursor.getString(cursor.getColumnIndexOrThrow("address")));
+                    sms.setDate(cursor.getString(cursor.getColumnIndexOrThrow("date")));
+                    sms.save();
+                    messages.add(sms);
+                    cursor.moveToNext();
+                } catch (Exception ex) {
+                    //something wen't wrong, feel free to add code to debug
+                }
+            }
+        }
+        cursor.close();
+        return messages;
     }
 
     public List<SMSThreadInfo> getThreads() {
         List<SMSThreadInfo> results = new LinkedList();
+        List<Long> thread_ids = new LinkedList<Long>();
 
-        String number_type = (INBOX_FLAG == 0x0) ? "creator" : "address";
+        String number_type = "address"; //(INBOX_FLAG == 0x0) ? "creator" : "address";
 
         this.cursor = this.context.getContentResolver().query(
                 this.location,
@@ -42,25 +89,36 @@ public class SMSReader {
                 null,
                 null,
                 "thread_id DESC"
-                );
+        );
+        try {
+            if (cursor.moveToFirst()) {
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    SMSThreadInfo sms = new SMSThreadInfo();
+                    long thread_id = cursor.getLong(cursor.getColumnIndexOrThrow("thread_id"));
+                    String number = cursor.getString(cursor.getColumnIndexOrThrow(number_type));
+                    String person = cursor.getString(cursor.getColumnIndexOrThrow("person"));
 
-        if(cursor.moveToFirst()) {
-            for(int i=0; i < cursor.getCount(); i++) {
-                SMSThreadInfo sms = new SMSThreadInfo();
-                sms.setThreadId(cursor.getLong(cursor.getColumnIndexOrThrow("thread_id")));
-                sms.setContactId(cursor.getString(cursor.getColumnIndexOrThrow("person")).toString());
-                sms.setNumber(cursor.getString(cursor.getColumnIndexOrThrow(number_type)).toString());
-                results.add(sms);
-                cursor.moveToNext();
+                    if (!thread_ids.contains(thread_id)) {
+                        thread_ids.add(thread_id);
+                        sms.setThreadId(thread_id);
+                        sms.setNumber(number);
+                        if (person != null) {
+                            sms.setContactId(person);
+                        } else {
+                            sms.setContactId("Unknown");
+                        }
+                        if (number != null)
+                            results.add(sms);
+                        cursor.moveToNext();
+                    }
+                }
             }
+        } catch (Exception ex) {
+            Log.d("LARAT-ERROR", ex.getMessage());
         }
 
         cursor.close();
 
         return results;
-    }
-
-    public void selectThread(long threadId) {
-        
     }
 }

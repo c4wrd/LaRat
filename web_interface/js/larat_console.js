@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
                     args.push(value);
             });
             
-           $.get("command.php?command=sendCommand&function=" + argArray[0] + "&args=" + args + "&clientId=" + clientIds[0]);
+           $.post("command.php", {"command": "sendCommand", "fn": argArray[0], "args": args, "client_id": clientIds[0]});
         }
     });
 });
@@ -93,7 +93,7 @@ var commandList = {};
 var clientIds = [];
 
 var getClients = function(args, terminal) {
-    $.get( "command.php?command=getClients", function( result ) {
+    $.post( "command.php", {"command": "getClients"}, function( result ) {
         var json = JSON.parse(result);
         json['clients'].forEach(function(client) {
             terminal.echo("\t" + client['objectId']);
@@ -135,7 +135,7 @@ var toast = function(args, terminal) {
 
 var getInfo = function(args, terminal) {
     var client = args[1];
-    $.get( "command.php?command=getDetails&clientId=" + client, function( result ) {
+    $.post( "command.php", { "command": "getDetails", "client_id": client}, function( result ) {
         result = JSON.parse(result);
         if(result['status'] == 'ok') {
             var details = result['clientDetails'];
@@ -160,16 +160,20 @@ var getInfo = function(args, terminal) {
 var screenOn = function(args, terminal) {
     var arg = ["test", "test"];
     
-    $.get("command.php?command=sendCommand&function=ScreenOn&clientId=" + args[1] + "&args=" + arg, function(result) {
+    $.post("command.php", { command: "sendCommand", fn: "ScreenOn", client_id: args[1], args: arg }, function(result) {
         terminal.echo(result);
     });
+}
+
+var getMessages = function(args, terminal) {
+	
+	
 }
 
 commandList["get"] = getClients;
 commandList["add"] = add;
 commandList["rm"] = rmv;
 commandList["ssh"] = ssh;
-commandList["toast"] = toast;
 commandList['list'] = list;
 commandList['info'] = getInfo;
 commandList['screenon'] = screenOn;

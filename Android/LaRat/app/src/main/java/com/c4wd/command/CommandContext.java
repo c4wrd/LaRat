@@ -26,6 +26,10 @@ public class CommandContext {
     }
 
     public Object getArgument(int index) {
-        return this.arguments.get(index);
+        try {
+            return this.arguments.get(index);
+        } catch (IndexOutOfBoundsException ex) {
+            return null;
+        }
     }
 }

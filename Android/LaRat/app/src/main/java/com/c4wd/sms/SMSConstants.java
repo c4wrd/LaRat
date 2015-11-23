@@ -6,4 +6,5 @@ package com.c4wd.sms;
 public class SMSConstants {
     public static String INBOX = "content://sms/inbox";
     public static String SENT = "content://sms/sent";
+    public static String SMS = "content://sms";
 }

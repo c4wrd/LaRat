@@ -3,22 +3,17 @@
 include "client.php";
 include "parse.php";
 
-/* TODO
-	Remove ''userUpdate' and place in it's own file. Goal is to seperate client and command server funcs.
-*/
+/* 
+ * This file contains all the functions (and where you implement) that are purely sent from the web console.
+ */
 
-if( isset( $_GET['command'] ) ) {
-	$command = $_GET['command'];
-	$clientId = isset($_GET['clientId']) ? $_GET['clientId'] : "all";
+if( isset( $_POST['command'] ) ) {
+	$command = $_POST['command'];
+	$clientId = isset($_POST['client_id']) ? $_POST['client_id'] : "all";
 	$response = array();
 	switch ($command) {
-		case "addMessage": {
-			Client::addMessage($clientId, $_GET['messageType'], $_GET['message']);
-			echo json_encode(array('status'=>'ok'));
-			break;
-		}
 		case "getLocationHistory": {
-			$response = Client::getClientLocationHistory($clientId, $_GET['number']);
+			$response = Client::getClientLocationHistory($clientId, $_POST['number']);
 			echo json_encode($response);
 			break;
 		}
@@ -58,30 +53,8 @@ if( isset( $_GET['command'] ) ) {
 			break;
 		}
 		case "sendCommand": {
-			Parse::sendCommand($clientId, $_GET['function'], isset($_GET['args']) ? $_GET['args'] : "");	//json encoded arguments
+			Parse::sendCommand($clientId, $_POST['fn'], isset($_POST['args']) ? $_POST['args'] : "");	//json encoded arguments
 			break;
-		}
-		case "updateUser": {
-			Client::updateUser($clientId, array(
-				'latitude' => $_GET['latitude'],
-				'longitude' => $_GET['longitude']
-				)
-			);
-			break;
-		}
-		case "userUpdate": {
-			Client::userUpdate(
-				$clientId,
-				$_GET['carrier'],
-				$_GET['phoneNumber'],
-				$_GET['deviceid'],
-				$_GET['sdkversion'],
-				array(
-					'latitude' => $_GET['latitude'],
-					'longitude' => $_GET['longitude']
-				)
-			);
-			echo json_encode(array("status" => "ok"));
 		}
 	}
 } else {
