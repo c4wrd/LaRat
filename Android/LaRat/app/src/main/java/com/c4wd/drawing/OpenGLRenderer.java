@@ -8,6 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 /**
  * Created by cory on 10/6/15.
+ * Class created in part by tutorial found on https://www3.ntu.edu.sg/home/ehchua/programming/android/Android_3D.html
  */
 
 
