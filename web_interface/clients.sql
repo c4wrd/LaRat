@@ -7,7 +7,7 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `larat_clients`;
 CREATE TABLE `larat_clients` (
-  `objectId` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `objectId` varchar(50) CHARACTER SET utf8 NOT NULL,
   `carrier` varchar(15) CHARACTER SET utf8 NOT NULL,
   `phoneNumber` varchar(10) CHARACTER SET utf8 NOT NULL,
   `deviceid` varchar(25) CHARACTER SET utf8 NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE `larat_clients` (
 
 DROP TABLE IF EXISTS `clients`;
 CREATE TABLE `clients` (
-  `objectId` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `objectId` varchar(50) CHARACTER SET utf8 NOT NULL,
   `carrier` varchar(15) CHARACTER SET utf8 NOT NULL,
   `phoneNumber` varchar(10) CHARACTER SET utf8 NOT NULL,
   `deviceid` varchar(25) CHARACTER SET utf8 NOT NULL,
@@ -27,22 +27,12 @@ CREATE TABLE `clients` (
 
 DROP TABLE IF EXISTS `client_messages`;
 CREATE TABLE `client_messages` (
-  `objectId` varchar(10) CHARACTER SET utf8 NOT NULL,
-  `message_type` varchar(10) NOT NULL,
+  `objectId` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `message_type` varchar(50) NOT NULL,
   `message` mediumtext CHARACTER SET utf8 NOT NULL,
   `unread` tinyint(1) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `client_sms_thread`;
-CREATE TABLE `client_sms_thread` (
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `to` varchar(12) NOT NULL,
-  `from` varchar(12) NOT NULL,
-  `threadId` varchar(8) NOT NULL,
-  `message` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `location_history`;
