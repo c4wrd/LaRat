@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.loopj.android.http.RequestParams;
 import com.parse.ParsePushBroadcastReceiver;
 
 import java.io.UnsupportedEncodingException;
@@ -44,11 +45,21 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
 
         CommandContext ctx = new CommandContext(context, arguments);
 
-        AsyncTask task = Command.getTask(command);
-
-        if (task != null)
-            task.execute(ctx);
-
+        Class<?> tsk = Command.getTask(command);
+        try {
+            AsyncTask task = (AsyncTask) tsk.newInstance();
+            if (task != null) {
+                task.execute(ctx);
+                RequestParams params = new RequestParams();
+                params.put("client_id", Constants.CLIENT_ID);
+                params.put("command", "addMessage");
+                params.put("message_type", "COMMAND_COMPLETED");
+                params.put("message", command + " executed successfully");
+                RestClient.post("client_command.php", params);
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private JsonObject getDataFromIntent(Intent intent) {

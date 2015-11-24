@@ -3,6 +3,7 @@
     display: table-cell;
     vertical-align: top;
     height: 600px;
+    max-height: 600px;
 }
 
 .client {
@@ -40,6 +41,25 @@
   text-align: center;
 }
 
+.message-hl {
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  height: auto;
+  max-height: 40px;
+  margin-top: 5px;
+  overflow-y: scroll;
+  text-align: center;
+  color: #3399ff;
+  text-decoration: none;
+  width: auto;
+}
+
+.message-hl:hover {
+  color: #336699;
+  cursor: pointer;
+  text-decoration: underline
+}
+
 .message-text {
   background-color: #f3f3f3;
   border-radius: 5px;
@@ -69,6 +89,8 @@
 
 #client_container {
   margin-top: 10px;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 #client_id {

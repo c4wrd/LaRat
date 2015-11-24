@@ -31,17 +31,6 @@
             </h3>
           </div>
           <ul id="client-container" class="list-group">
-            <li class="list-group-item client">
-              <div id="client_id">
-                CLIENT_ID
-              </div>
-              <div id="client_number">
-                PHONE_NUMBER
-              </div>
-              <div id="client_provider">
-                CARRIER
-              </div>
-            </li>
           </ul>
           <div class="progress">
             <div class="progress-bar" id="client-progress" style="width: 100%">
@@ -109,7 +98,7 @@
           <table class="table">
             <tbody>
               <tr>
-                <td colspan="2">
+                <td colspan="2" id="btn-get-sms-threads">
                   <a href="#" class="btn btn-default fullwidth">Get SMS Threads</a>
                 </td>
               </tr>
@@ -119,7 +108,7 @@
                   placeholder="Thread ID">
                 </td>
                 <td>
-                  <button type="button" id="btn-screen-crack" class="btn btn-default btn-small fullwidth">
+                  <button type="button" id="btn-get-sms" class="btn btn-default btn-small fullwidth">
                     SMS from thread
                   </button>
                 </td>
@@ -134,13 +123,6 @@
             </h3>
           </div>
           <ul id="notification-center" class="list-group">
-            <li class="list-group-item notification">
-              <span class="label label-success">CLIENT_ID</span>
-              <span class="badge">TIME</span>
-              <div class="message-text">
-                MESSAGE
-              </div>
-            </li>
           </ul>
         </div>
       </div>
@@ -151,8 +133,6 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"
     >
     </script>
-  
-    <script src="js/screen-8e576d1d97.js"></script>
 </body>
 
 </html>

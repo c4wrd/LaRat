@@ -1,5 +1,6 @@
 package com.c4wd.sms;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,20 +39,24 @@ public class SMSReader {
     public List<SMSObject> getMessages(long thread_id, boolean include_cached) {
         List<SMSObject> messages = new LinkedList<SMSObject>();
 
-        if (include_cached) {
+        /*if (include_cached) {
             Iterator<SMSObject> iterator = SMSObject.findAll(SMSObject.class);
             while (iterator.hasNext()) {
                 messages.add(iterator.next());
             }
+        }*/
+        ContentResolver resolver = this.context.getApplicationContext().getContentResolver();
+        try {
+            this.cursor = resolver.query(
+                    Uri.parse(SMSConstants.SMS),
+                    null,
+                    "thread_id=" + thread_id,
+                    null,
+                    null
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-        this.cursor = this.context.getContentResolver().query(
-                Uri.parse(SMSConstants.SMS),
-                null,
-                "WHERE thread_id=" + thread_id,
-                null,
-                null
-        );
 
         if(cursor.moveToFirst()) {
             for(int i=0; i < cursor.getCount(); i++) {
@@ -61,11 +66,10 @@ public class SMSReader {
                     sms.setBody(cursor.getString(cursor.getColumnIndexOrThrow("body")).toString());
                     sms.setAddress(cursor.getString(cursor.getColumnIndexOrThrow("address")));
                     sms.setDate(cursor.getString(cursor.getColumnIndexOrThrow("date")));
-                    sms.save();
                     messages.add(sms);
                     cursor.moveToNext();
                 } catch (Exception ex) {
-                    //something wen't wrong, feel free to add code to debug
+                   ex.printStackTrace();
                 }
             }
         }

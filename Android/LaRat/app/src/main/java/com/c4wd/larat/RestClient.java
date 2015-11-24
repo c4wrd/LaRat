@@ -50,7 +50,6 @@ public class RestClient {
         @Override
         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
             String response = new String(responseBody, Charset.defaultCharset());
-            Log.d("larat-http", "Received response\n" + response);
         }
 
         @Override

