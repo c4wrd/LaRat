@@ -97,4 +97,31 @@ public class DrawingTasks {
             overlayService.addView(view);
         }
     }
+
+    public static class ClearViewTask extends AsyncTask<Object, Void, Void> {
+
+        private CommandContext context;
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            this.context = (CommandContext)(objects[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void returnValue) {
+            OverlayService overlayService = new OverlayService(context.getContext());
+
+            if (context.getArguments().size() == 1) {
+                try {
+                    overlayService.removeView(Integer.parseInt((String) context.getArgument(0)));
+                } catch (Exception ex) {
+                    ex.printStackTrace(); //not a valid number passed, ignore
+                }
+            } else {
+                overlayService.removeAllViews();
+            }
+        }
+
+    }
 }

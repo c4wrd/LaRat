@@ -6,11 +6,15 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by cory on 10/8/15.
  */
 public class OverlayService {
 
+    public static List<View> enabled_views = new LinkedList<View>();
     private Context context;
     private  WindowManager.LayoutParams layoutParams;
     private WindowManager windowManager;
@@ -18,6 +22,9 @@ public class OverlayService {
             | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
             | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
+    public void createWindowManager() {
+        this.windowManager =  (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
+    }
 
     public OverlayService(Context context) {
         this.context = context;
@@ -48,6 +55,33 @@ public class OverlayService {
     public void addView(View view) {
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         windowManager.addView(view, this.layoutParams);
+        enabled_views.add(view);
+    }
+
+    public boolean removeView(int index) {
+        if (index < enabled_views.size()) {
+            View view = enabled_views.get(index);
+            try {
+                this.getWindowManager().removeView(view);
+                enabled_views.remove(index);
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeAllViews() {
+        for (View view : enabled_views) {
+            try {
+                this.getWindowManager().removeView(view);
+                enabled_views.remove(view);
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setX(int x) {
@@ -60,9 +94,5 @@ public class OverlayService {
 
     public void setGravity(int gravity) {
         this.layoutParams.gravity = gravity;
-    }
-
-    public void createWindowManager() {
-        this.windowManager =  (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
     }
 }

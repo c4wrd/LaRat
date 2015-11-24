@@ -37,11 +37,13 @@ var setupGlobals = function() {
 	globals.buttons.open_gl = $("#btn-open-gl");
 	globals.buttons.screen_crack = $("#btn-screen-crack");
 	globals.buttons.pong = $("#btn-pong")
+	globals.buttons.clear_view = $("#btn-delete-view");
 	globals.buttons.sms_threads = $("#btn-get-sms-threads");
 	globals.buttons.get_sms = $("#btn-get-sms");
 	
 	globals.forms.toast_text = $("#toast_message_input");
 	globals.forms.thread_id = $("#thread_input")
+	globals.forms.view_id = $("#view_input");
 
 	globals.divs.client_container = $("#client-container");
 	globals.divs.messages = $("#notification-center");
@@ -82,6 +84,14 @@ var initButtonHandlers = function() {
 			toastText,
 			"LONG"
 		]);
+	});
+	
+	globals.buttons.clear_view.click( function() {
+		if (globals.forms.view_id.val().length == 0) {
+			sendCommand("ClearViews");
+		} else {
+			sendCommand("ClearViews", [globals.forms.view_id.val()]);
+		}
 	});
 	
 	globals.buttons.open_gl.click( function() {
