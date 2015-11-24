@@ -172,7 +172,6 @@ var createMsgDiv = function(message, msg_type, id, timestamp) {
 					"command.php",
 					{"command": "getMessages", "client_id": message},
 					function(result) {
-						alert(result);
 						var msg_info = JSON.parse(result).messages[0].message;
 						var something = window.open("data:text/json," + encodeURIComponent(JSON.stringify(JSON.parse(msg_info), null, 4)), "_blank");	
 						something.focus();				

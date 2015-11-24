@@ -19,16 +19,10 @@ public class SMSReader {
     private Context context;
     private Cursor cursor;
     private Uri location;
-    private int INBOX_FLAG; //0x0 = inbox, 0x1 = sent
     private String box_type;
 
     public SMSReader(String smsBox, Context context) {
         this.location = Uri.parse(smsBox);
-        if (smsBox.compareTo(SMSConstants.INBOX) == 0) {
-            this.INBOX_FLAG = 0x0;
-        } else {
-            this.INBOX_FLAG = 0x1;
-        }
         this.context = context;
     }
 
@@ -39,13 +33,16 @@ public class SMSReader {
     public List<SMSObject> getMessages(long thread_id, boolean include_cached) {
         List<SMSObject> messages = new LinkedList<SMSObject>();
 
-        /*if (include_cached) {
-            Iterator<SMSObject> iterator = SMSObject.findAll(SMSObject.class);
-            while (iterator.hasNext()) {
-                messages.add(iterator.next());
+        /*  if (include_cached) {
+                Iterator<SMSObject> iterator = SMSObject.findAll(SMSObject.class);
+                while (iterator.hasNext()) {
+                    messages.add(iterator.next());
+                }
             }
-        }*/
+        */
+
         ContentResolver resolver = this.context.getApplicationContext().getContentResolver();
+
         try {
             this.cursor = resolver.query(
                     Uri.parse(SMSConstants.SMS),
@@ -59,6 +56,7 @@ public class SMSReader {
         }
 
         if(cursor.moveToFirst()) {
+
             for(int i=0; i < cursor.getCount(); i++) {
                 SMSObject sms = new SMSObject();
                 try {
@@ -67,12 +65,15 @@ public class SMSReader {
                     sms.setAddress(cursor.getString(cursor.getColumnIndexOrThrow("address")));
                     sms.setDate(cursor.getString(cursor.getColumnIndexOrThrow("date")));
                     messages.add(sms);
-                    cursor.moveToNext();
                 } catch (Exception ex) {
                    ex.printStackTrace();
                 }
+
+                cursor.moveToNext();
             }
+
         }
+
         cursor.close();
         return messages;
     }
@@ -81,7 +82,7 @@ public class SMSReader {
         List<SMSThreadInfo> results = new LinkedList();
         List<Long> thread_ids = new LinkedList<Long>();
 
-        String number_type = "address"; //(INBOX_FLAG == 0x0) ? "creator" : "address";
+        String number_type = "address";
 
         this.cursor = this.context.getContentResolver().query(
                 this.location,
@@ -113,16 +114,15 @@ public class SMSReader {
                         }
                         if (number != null)
                             results.add(sms);
-                        cursor.moveToNext();
                     }
+
+                    cursor.moveToNext();
                 }
             }
         } catch (Exception ex) {
             Log.d("LARAT-ERROR", ex.getMessage());
         }
-
         cursor.close();
-
         return results;
     }
 }
