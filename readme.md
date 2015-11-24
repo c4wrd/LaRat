@@ -1,28 +1,41 @@
 # LaRat
 ### Lightweight Android Remote Administration Tool
-In the world of mobile phone security, Android is the leading platform in malware. There is no limit to the damage that can be caused to a phone, simply by installing an app. LaRat was built PURELY for demonstration of security flaws within Android. This project was built roughly in a week for a project in my Computer Ethics course at Montana State University and was not built for malicuous intentions!
+In the world of mobile phone security, Android is the leading platform in malware. There is no limit to the damage that can be caused to a phone, simply by installing an app. LaRat was built PURELY for demonstration of security flaws within Android. This project was built roughly in a week or so of man hours for a project in my Computer Ethics course at Montana State University and was not built for malicuous intentions!
 
 ### Version
-0.5.2 - WIP
-	- Most underlying technology is in place, overall functionality of the application is seemingly finished. From here on out only task implementations will be added.
-	- Web interface unfunctional, only CLI console is usable
-	- SMS not functional yet...
+1.0.0 - RC 1
+- Most underlying technology is in place, overall functionality of the application is seemingly finished.
+- Web interface is fully functional.
+	- Get messages and threads implemented. Can be viewed directly by clicking in notification area!
+	- Clients: functional
+	- Notifications: functional
+- Finished SMS support
+- Added 'ClearView', which clears any obnoxious views from the screen
+- This is the final application to be displayed during presentation
 
 ### Todos
- - Web interface
+ - Web interface *COMPLETE* (RC1)
  - More task functionality
-    - Get messages (display in web interface) *IN PROGRESS*
-    - Propietary animation
+    - Get messages (display in web interface) ~~IN PROGRESS~~ *COMPLETE* (RC1)
+    - Propietary animation *CANCELLED*
     - Screenshot Functionality *RESEARCHING*
-    - Camera Access *CONTEMPLATING REMOVAL*
-    - Audio recording *CONTEMPLATING REMOVAL*
+    - Camera Access *REMOVED* (RC1)
+    - Audio recording *REMOVED* (RC1)
+    - Add Google form for passwords *IN PROGRESS*
+ - Leverage the Parse callback API to remove all calls to the backend from clients *IN PROGRESS*
 
 ### What's included
-    - web_interface
-        - Web interface, practically drag/drop setup on web server supporting PHP
-    - Android
+- web_interface
+ 	- Web interface, practically drag/drop setup on web server supporting PHP
+ 	- This is just a basic way to interface with clients! You can implement this in any flavor of app you want! Desktop, web, mobile, etc!
+- Android
         - Android application source
 
+###Third Party
+LaRat was built with many third party libraries and tools to ease development. Check them out!
+- SugarORM (for saving messages locally, currently nonfunctional): http://satyan.github.io/sugar/index.html
+- JetStrap (for aid in building Bootstrap interface): https://jetstrap.com/
+- db.php (for various database management functions): https://github.com/tschoffelen/db.php
 
 License
 ----
