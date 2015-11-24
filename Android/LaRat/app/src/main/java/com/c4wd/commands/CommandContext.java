@@ -1,4 +1,4 @@
-package com.c4wd.command;
+package com.c4wd.commands;
 
 import android.content.Context;
 

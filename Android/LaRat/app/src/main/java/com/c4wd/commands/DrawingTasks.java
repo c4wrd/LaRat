@@ -1,6 +1,5 @@
-package com.c4wd.command;
+package com.c4wd.commands;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;

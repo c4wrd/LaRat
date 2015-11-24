@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.c4wd.command.Command;
-import com.c4wd.command.CommandContext;
+import com.c4wd.commands.Command;
+import com.c4wd.commands.CommandContext;
 
 import java.util.LinkedList;
 

