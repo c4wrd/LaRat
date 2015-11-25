@@ -6,7 +6,7 @@ package com.c4wd.sms;
 public class SMSThreadInfo {
 
     private String number;
-    private String contactId;
+    private String contact_id;
     private long threadId;
 
     public String getNumber() {
@@ -26,10 +26,10 @@ public class SMSThreadInfo {
     }
 
     public String getContactId() {
-        return contactId;
+        return contact_id;
     }
 
-    public void setContactId(String contactId) {
-        this.contactId = contactId;
+    public void setContactId(String contact_id) {
+        this.contact_id = contact_id;
     }
 }

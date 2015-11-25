@@ -1,5 +1,6 @@
 package com.c4wd.sms;
 
+import com.c4wd.larat.Constants;
 import com.orm.SugarApp;
 import com.orm.SugarRecord;
 
@@ -7,10 +8,29 @@ import com.orm.SugarRecord;
  * Created by cory on 10/9/15.
  */
 public class SMSObject extends SugarRecord<SMSObject> {
+
     private long threadId;
     private String body;
     private String address;
     private String date;
+    private String person_id;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = (type == 1) ? "INBOX" : "SENT";
+    }
+
+    public String getPersonId() {
+        return person_id;
+    }
+
+    public void setPersonId(String person_id) {
+        this.person_id = person_id;
+    }
 
     public String getAddress() {
         return address;
@@ -43,4 +63,6 @@ public class SMSObject extends SugarRecord<SMSObject> {
     public void setDate(String date) {
         this.date = date;
     }
+
 }
+

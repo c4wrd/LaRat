@@ -21,13 +21,13 @@ public class BouncingBall extends View {
     public float maxX = 1000;
     public float maxY = 1000;
 
-    private Handler handler;
+    private Paint paint;
 
     public BouncingBall(Context context) {
         super(context);
         this.setWillNotDraw(false);
         this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        handler = new Handler();
+        this.paint = new Paint();
     }
 
     private Runnable renderFrame = new Runnable() {
@@ -49,7 +49,6 @@ public class BouncingBall extends View {
         x += dx;
         y += dy;
 
-        final Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         canvas.drawCircle(x, y, 40, paint);
         this.invalidate();

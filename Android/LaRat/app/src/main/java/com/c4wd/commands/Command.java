@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Command {
 
-    public static HashMap<String, Class<? extends AsyncTask>> commandList;
+    private static HashMap<String, Class<? extends AsyncTask>> commandList;
 
     public static Class<?> getTask(String id) {
         return Command.commandList.get(id);
@@ -19,7 +19,7 @@ public class Command {
         if (Command.commandList == null) {
             Command.commandList = new HashMap<String, Class<? extends AsyncTask>>();
             //Adding commands is simple
-            //commandList.put("String of command that is sent from the server", new (Task class)());
+            //commandList.put("String of command that is sent from the server", new Task.class);
 
             commandList.put("ScreenOn", GenericTasks.ScreenOnTask.class);
             commandList.put("SetLocationInterval", GenericTasks.SetLocationIntervalTask.class);

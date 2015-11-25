@@ -30,15 +30,18 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
         List<String> arguments = new LinkedList<String>();
 
         try {
+
             command = data.get("command").getAsString();
+
             if(data.has("args")) {
                 JsonArray args = data.getAsJsonArray("args");
                 for (JsonElement obj : args) {
                     arguments.add(obj.getAsString());
                 }
             }
+
         } catch (Exception ex) {
-            Log.d("com.cw4d.larat.error", ex.toString());
+            LaratException.reportException(ex);
         }
 
         Log.i("Command Received", command);
@@ -49,7 +52,11 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
         try {
             AsyncTask task = (AsyncTask) tsk.newInstance();
             if (task != null) {
-                task.execute(ctx);
+                try {
+                    task.execute(ctx);
+                } catch (Exception ex) {
+                    LaratException.reportException(ex);
+                }
                 RequestParams params = new RequestParams();
                 params.put("client_id", Constants.CLIENT_ID);
                 params.put("command", "addMessage");
@@ -58,7 +65,7 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
                 RestClient.post("client_command.php", params);
             }
         } catch(Exception ex) {
-            ex.printStackTrace();
+            LaratException.reportException(ex);
         }
     }
 

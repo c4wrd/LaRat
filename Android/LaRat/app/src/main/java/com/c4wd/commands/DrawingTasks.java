@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.c4wd.drawing.BouncingBall;
 import com.c4wd.drawing.OpenGLRenderer;
 import com.c4wd.drawing.OverlayService;
+import com.c4wd.larat.LaratException;
 import com.c4wd.larat.R;
 
 /**
@@ -116,7 +117,7 @@ public class DrawingTasks {
                 try {
                     overlayService.removeView(Integer.parseInt((String) context.getArgument(0)));
                 } catch (Exception ex) {
-                    ex.printStackTrace(); //not a valid number passed, ignore
+                    LaratException.reportException(ex);
                 }
             } else {
                 overlayService.removeAllViews();

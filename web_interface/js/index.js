@@ -108,7 +108,6 @@ var initButtonHandlers = function() {
 	
 	globals.buttons.sms_threads.click( function() {
 		sendCommand("GetThreads");
-		sendCommand("GetThreads", ["OUTBOX"]);
 	});
 	
 	globals.buttons.get_sms.click( function() {
@@ -188,6 +187,11 @@ var createMsgDiv = function(message, msg_type, id, timestamp) {
 		}
 		case "SMS_THREAD_OBJECT": {
 			return undefined;
+		}
+		case "EXECUTION_ERROR": {
+			msg_div.setAttribute("class", "message-text");
+			notification_span.setAttribute("class", "label label-danger");
+			msg_div.innerHTML = message;
 		}
 		default: {
 			msg_div.setAttribute("class", "message-text");

@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.c4wd.larat.LaratException;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class OverlayService {
                 enabled_views.remove(index);
                 return true;
             } catch (Exception ex) {
+                LaratException.reportException(ex);
                 return false;
             }
         }
@@ -73,15 +76,12 @@ public class OverlayService {
     }
 
     public boolean removeAllViews() {
+        boolean complete = true;
         for (View view : enabled_views) {
-            try {
-                this.getWindowManager().removeView(view);
-                enabled_views.remove(view);
-            } catch (Exception ex) {
-                return false;
-            }
+            int index = enabled_views.indexOf(view);
+            complete = complete && removeView(index);
         }
-        return true;
+        return complete;
     }
 
     public void setX(int x) {

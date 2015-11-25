@@ -4,7 +4,10 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
+
+import com.c4wd.larat.LaratException;
 
 import java.net.URI;
 import java.util.Iterator;
@@ -52,21 +55,27 @@ public class SMSReader {
                     null
             );
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LaratException.reportException(ex);
         }
 
         if(cursor.moveToFirst()) {
 
             for(int i=0; i < cursor.getCount(); i++) {
                 SMSObject sms = new SMSObject();
+
                 try {
+
+                    int type = cursor.getInt(cursor.getColumnIndex("type"));
+                    sms.setType(type);
                     sms.setThreadId(cursor.getLong(cursor.getColumnIndexOrThrow("thread_id")));
-                    sms.setBody(cursor.getString(cursor.getColumnIndexOrThrow("body")).toString());
+                    sms.setBody(cursor.getString(cursor.getColumnIndexOrThrow("body")));
                     sms.setAddress(cursor.getString(cursor.getColumnIndexOrThrow("address")));
                     sms.setDate(cursor.getString(cursor.getColumnIndexOrThrow("date")));
+                    sms.setPersonId(getPersonFromNumber(resolver, sms.getAddress()));
                     messages.add(sms);
+
                 } catch (Exception ex) {
-                   ex.printStackTrace();
+                    LaratException.reportException(ex);
                 }
 
                 cursor.moveToNext();
@@ -82,14 +91,12 @@ public class SMSReader {
         List<SMSThreadInfo> results = new LinkedList();
         List<Long> thread_ids = new LinkedList<Long>();
 
-        String number_type = "address";
-
         this.cursor = this.context.getContentResolver().query(
                 this.location,
                 new String[]{
                         "thread_id",
-                        "person",
-                        number_type
+                        "creator",
+                        "address"
                 },
                 null,
                 null,
@@ -98,20 +105,16 @@ public class SMSReader {
         try {
             if (cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
+
                     SMSThreadInfo sms = new SMSThreadInfo();
                     long thread_id = cursor.getLong(cursor.getColumnIndexOrThrow("thread_id"));
-                    String number = cursor.getString(cursor.getColumnIndexOrThrow(number_type));
-                    String person = cursor.getString(cursor.getColumnIndexOrThrow("person"));
+                    String number = cursor.getString(cursor.getColumnIndexOrThrow("address"));
 
                     if (!thread_ids.contains(thread_id)) {
                         thread_ids.add(thread_id);
                         sms.setThreadId(thread_id);
                         sms.setNumber(number);
-                        if (person != null) {
-                            sms.setContactId(person);
-                        } else {
-                            sms.setContactId("Unknown");
-                        }
+                        sms.setContactId(getPersonFromNumber(this.context.getContentResolver(), number));
                         if (number != null)
                             results.add(sms);
                     }
@@ -120,9 +123,34 @@ public class SMSReader {
                 }
             }
         } catch (Exception ex) {
-            Log.d("LARAT-ERROR", ex.getMessage());
+            LaratException.reportException(ex);
         }
         cursor.close();
         return results;
+    }
+
+    private String getPersonFromNumber(ContentResolver cr, String phoneNumber) {
+
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(phoneNumber));
+
+        try {
+
+            Cursor cursor = cr.query(uri,
+                    new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+
+            String contactName = null;
+            if (cursor.moveToFirst()) {
+                contactName = cursor.getString(cursor
+                        .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+            }
+            if (!cursor.isClosed()) {
+                cursor.close();
+            }
+
+            return contactName;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

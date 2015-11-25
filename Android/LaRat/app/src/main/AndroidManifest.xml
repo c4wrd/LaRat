@@ -4,11 +4,6 @@
     package="com.c4wd.larat"
     android:name="com.orm.SugarApp">
 
-    <meta-data android:name="DATABASE" android:value="messages.db" />
-    <meta-data android:name="VERSION" android:value="2" />
-    <meta-data android:name="QUERY_LOG" android:value="true" />
-    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.c4wd.sms" />
-
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="18"/>
@@ -55,6 +50,11 @@
         android:theme="@style/Invisible"
         tools:replace="android:icon"
         >
+
+        <meta-data android:name="DATABASE" android:value="messages.db" />
+        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.c4wd.sms" />
 
         <activity
             android:name=".LaRatActivity"

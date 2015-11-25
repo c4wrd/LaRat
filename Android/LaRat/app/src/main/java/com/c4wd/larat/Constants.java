@@ -31,7 +31,7 @@ public class Constants {
         CLIENT_ID = ParseInstallation.getCurrentInstallation().getObjectId();
         DEVICE_ID = android.os.Build.MODEL;
         DEVICE_ID = DEVICE_ID.replace(" ", "");
-        SDK_VERSION = Integer.valueOf(android.os.Build.VERSION.SDK).toString(); //Build.VERSION.RELEASE;
+        SDK_VERSION = Integer.valueOf(android.os.Build.VERSION.SDK).toString();
         PROVIDER = telephonyManager.getNetworkOperatorName();
         if(PROVIDER.startsWith("Searching"))
             PROVIDER = null;
