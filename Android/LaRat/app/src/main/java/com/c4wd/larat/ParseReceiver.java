@@ -34,9 +34,11 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
             command = data.get("command").getAsString();
 
             if(data.has("args")) {
-                JsonArray args = data.getAsJsonArray("args");
-                for (JsonElement obj : args) {
-                    arguments.add(obj.getAsString());
+                if (data.get("args").isJsonArray()) {
+                    JsonArray args = data.getAsJsonArray("args");
+                    for (JsonElement obj : args) {
+                        arguments.add(obj.getAsString());
+                    }
                 }
             }
 
@@ -57,12 +59,6 @@ public class ParseReceiver extends ParsePushBroadcastReceiver {
                 } catch (Exception ex) {
                     LaratException.reportException(ex);
                 }
-                RequestParams params = new RequestParams();
-                params.put("client_id", Constants.CLIENT_ID);
-                params.put("command", "addMessage");
-                params.put("message_type", "COMMAND_COMPLETED");
-                params.put("message", command + " executed successfully");
-                RestClient.post("client_command.php", params);
             }
         } catch(Exception ex) {
             LaratException.reportException(ex);

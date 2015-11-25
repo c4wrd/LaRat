@@ -192,6 +192,7 @@ var createMsgDiv = function(message, msg_type, id, timestamp) {
 			msg_div.setAttribute("class", "message-text");
 			notification_span.setAttribute("class", "label label-danger");
 			msg_div.innerHTML = message;
+			break;
 		}
 		default: {
 			msg_div.setAttribute("class", "message-text");

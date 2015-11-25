@@ -71,6 +71,8 @@ public class DrawingTasks {
             view.maxY = overlayService.getWindowManager().getDefaultDisplay().getHeight();
 
             overlayService.addView(view);
+
+            Command.reportResult("Add an instance of Pong");
         }
 
     }
@@ -96,6 +98,8 @@ public class DrawingTasks {
             view.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
 
             overlayService.addView(view);
+
+            Command.reportResult("Cracked the screen!");
         }
     }
 
@@ -122,6 +126,7 @@ public class DrawingTasks {
             } else {
                 overlayService.removeAllViews();
             }
+            Command.reportResult("Remove view success");
         }
 
     }

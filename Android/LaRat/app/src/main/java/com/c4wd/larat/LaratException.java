@@ -15,7 +15,7 @@ public class LaratException {
         params.put("client_id", Constants.CLIENT_ID);
         params.put("message_type", "EXECUTION_ERROR");
         params.put("message", ex.getMessage());
-        RestClient.post("command.php", params);
+        RestClient.post("client_command.php", params);
         ex.printStackTrace();
     }
 
