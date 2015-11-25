@@ -40,10 +40,12 @@ var setupGlobals = function() {
 	globals.buttons.clear_view = $("#btn-delete-view");
 	globals.buttons.sms_threads = $("#btn-get-sms-threads");
 	globals.buttons.get_sms = $("#btn-get-sms");
+	globals.buttons.dl_image = $("#btn-dl-image");
 	
 	globals.forms.toast_text = $("#toast_message_input");
 	globals.forms.thread_id = $("#thread_input")
 	globals.forms.view_id = $("#view_input");
+	globals.forms.image_url = $("#img_input");
 
 	globals.divs.client_container = $("#client-container");
 	globals.divs.messages = $("#notification-center");
@@ -116,6 +118,12 @@ var initButtonHandlers = function() {
 				globals.forms.thread_id.val()
 			]);
 	});
+	
+	globals.buttons.dl_image.click(function() {
+		sendCommand("ShowImage", [
+			globals.forms.image_url.val()
+		]);
+	});
 }
 
 var createClientDiv = function(id, carrier, number) {
@@ -147,6 +155,12 @@ var createMsgDiv = function(message, msg_type, id, timestamp) {
 	badge.setAttribute("class", "badge");
 	badge.innerHTML = timestamp;
 	switch(msg_type) {
+		case "EXECUTION_ERROR": {
+			msg_div.setAttribute("class", "message-text");
+			notification_span.setAttribute("class", "label label-danger");
+			msg_div.innerHTML = message;
+			break;
+		}
 		case "MESSAGE_THREAD_RECV": {
 			msg_div.setAttribute("class", "message-hl");
 			msg_div.innerHTML = "Thread Information";
@@ -188,9 +202,9 @@ var createMsgDiv = function(message, msg_type, id, timestamp) {
 		case "SMS_THREAD_OBJECT": {
 			return undefined;
 		}
-		case "EXECUTION_ERROR": {
+		case "WARNING": {
 			msg_div.setAttribute("class", "message-text");
-			notification_span.setAttribute("class", "label label-danger");
+			notification_span.setAttribute("class", "label label-warning");
 			msg_div.innerHTML = message;
 			break;
 		}

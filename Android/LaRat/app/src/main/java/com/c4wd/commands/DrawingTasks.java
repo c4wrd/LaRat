@@ -1,10 +1,14 @@
 package com.c4wd.commands;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,6 +19,11 @@ import com.c4wd.drawing.OpenGLRenderer;
 import com.c4wd.drawing.OverlayService;
 import com.c4wd.larat.LaratException;
 import com.c4wd.larat.R;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by cory on 10/7/15.
@@ -129,5 +138,64 @@ public class DrawingTasks {
             Command.reportResult("Remove view success");
         }
 
+    }
+
+    public static class DrawURLImage extends AsyncTask<Object, Void, Bitmap> {
+
+        private CommandContext context;
+
+        @Override
+        protected Bitmap doInBackground(Object... objects) {
+            this.context = (CommandContext)objects[0];
+            if (this.context.getArguments().size() == 1) {
+                return downloadImg((String)this.context.getArgument(0));
+            } else {
+                Command.reportResult("No URL supplied!");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if (result != null) {
+                OverlayService overlayService = new OverlayService(context.getContext());
+                overlayService.setGravity(Gravity.CENTER);
+                Display disp = ((WindowManager)(this.context.getContext().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay();
+                int width = disp.getWidth();
+                int desired_width = (int) Math.ceil(width * .85); //we want to be 85% of the screen
+                int desired_height = desired_width * result.getHeight() / result.getWidth();
+                ImageView view = new ImageView(context.getContext());
+                view.setImageBitmap(Bitmap.createScaledBitmap(result, desired_width, desired_height, false));
+                view.setLayoutParams(new ViewGroup.LayoutParams(
+                        result.getWidth(),
+                        result.getHeight()
+                    )
+                );
+
+                overlayService.addView(view);
+            } else {
+                Command.reportWarning("Invalid image supplied!");
+            }
+        }
+
+        private Bitmap downloadImg(String url) {
+
+            Bitmap bmp =null;
+            try{
+                URL ulrn = new URL(url);
+                HttpURLConnection con = (HttpURLConnection)ulrn.openConnection();
+                InputStream is = con.getInputStream();
+                bmp = BitmapFactory.decodeStream(is);
+                if (null != bmp)
+                    return bmp;
+            }
+            catch (MalformedURLException e) {
+                Command.reportWarning("Invalid URL supplied!");
+            }
+            catch(Exception e) {
+                LaratException.reportException(e);
+            }
+            return bmp;
+        }
     }
 }
