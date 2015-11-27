@@ -21,7 +21,7 @@ import java.util.UUID;
 /**
  * Created by Cory-PC on 11/22/2015.
  */
-public class SMSCommands {
+public class SMSTasks {
 
     public static class GetThreadsTask extends AsyncTask<Object, Void, Object> {
 

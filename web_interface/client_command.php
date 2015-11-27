@@ -10,10 +10,30 @@ if( isset( $_POST['command'] ) ) {
 	switch ($command) {
 		case "addMessage": {
 			if (isset($_POST['client_id']) && isset($_POST['message_type']) && isset($_POST['message'])) {
-			Client::addNotification($clientId, $_POST['message_type'], $_POST['message']);
-			echo json_encode(array('status'=>'ok'));
+				Client::addNotification($clientId, $_POST['message_type'], $_POST['message']);
+				echo json_encode(array('status'=>'ok'));
 			} else {
 				echo json_encode(array('status' => 'failure', 'reason' => 'insufficient arguments supplied'));
+			}
+			break;
+		}
+		case "file_upload": {
+			if (isset($_POST['message_type']) && isset($_POST['message'])) {
+				$message = $_POST['message'];	//our base64 encoded data
+				$message_type = $_POST['message_type'];
+				switch ($message_type) {
+					case 'IMAGE': {
+						$filename = 'img/'.uniqid('img_').'.jpg';
+						$file = fopen($filename, 'w');
+						fwrite($file, base64_decode($message));
+						fclose($file);
+						Client::addNotification($clientId, 'IMG_RECV', $filename);
+						echo json_encode(array('status'=>'ok'));
+						break;
+					}
+					default:
+						break;
+				}
 			}
 			break;
 		}
@@ -30,7 +50,7 @@ if( isset( $_POST['command'] ) ) {
 			break;
 		}
 		case "sms_thread_object": {
-			
+
 			break;
 		}
 		case "updateUser": {

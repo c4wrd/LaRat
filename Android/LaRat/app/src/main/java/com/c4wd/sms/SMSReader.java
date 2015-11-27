@@ -5,12 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.util.Log;
 
 import com.c4wd.larat.LaratException;
 
-import java.net.URI;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 

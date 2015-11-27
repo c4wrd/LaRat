@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
   <head>
     <meta charset="utf-8">
     <title>
@@ -17,14 +17,14 @@
     <script src="js/index.js"></script>
     <link href="css/index.css" rel="stylesheet">
 </head>
-  
+
   <body>
     <div class="container">
       <h3>
         LaRat Web Interface!
       </h3>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-9">
           <div class="page-header">
             <h3>
               Clients
@@ -36,9 +36,9 @@
             <div class="progress-bar" id="client-progress" style="width: 100%">
             </div>
           </div>
-          <a href="#" class="btn btn-default fullwidth">Reload<br></a>
+          <a href="#" id="reload-button" class="btn btn-default fullwidth">Reload<br></a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-9">
           <div class="page-header">
             <h3>
               Commands
@@ -70,6 +70,16 @@
                   </button>
                 </td>
               </tr>
+              <tr>
+                <td colspan=3>
+                  <button type="button" id="btn-front-pic" class="btn btn-default halfwidth">
+                    Front Camera Picture
+                  </button>
+                  <button type="button" id="btn-back-pic" class="btn btn-default halfwidth">
+                    Back Camera Picture
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
           <h3>
@@ -80,7 +90,7 @@
               <tr>
                 <td colspan="3">
                   <button type="button" id="btn-open-gl" class="btn btn-default btn-small halfwidth">
-                    OpenGL
+                    OpenGL Demo
                   </button>
                   <button type="button" id="btn-screen-crack" class="btn btn-default btn-small halfwidth">
                     Screen Crack
@@ -138,7 +148,7 @@
             </tbody>
           </table>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-9">
           <div class="page-header">
             <h3>
               Notification Center

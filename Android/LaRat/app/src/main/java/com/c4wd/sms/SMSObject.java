@@ -1,7 +1,5 @@
 package com.c4wd.sms;
 
-import com.c4wd.larat.Constants;
-import com.orm.SugarApp;
 import com.orm.SugarRecord;
 
 /**

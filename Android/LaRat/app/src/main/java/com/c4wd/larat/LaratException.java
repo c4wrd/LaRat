@@ -2,8 +2,6 @@ package com.c4wd.larat;
 
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
-
 /**
  * Created by cory on 11/24/15.
  */

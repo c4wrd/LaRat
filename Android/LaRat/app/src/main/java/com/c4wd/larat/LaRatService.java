@@ -2,18 +2,13 @@ package com.c4wd.larat;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.loopj.android.http.RequestParams;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
-
-
-import java.io.File;
 
 /**
  * Created by cory on 10/4/15.

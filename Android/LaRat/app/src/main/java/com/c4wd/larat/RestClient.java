@@ -3,22 +3,13 @@ package com.c4wd.larat;
 /**
  * Created by cory on 10/4/15.
  */
-import android.content.Context;
 import android.util.Log;
 
 import com.loopj.android.http.*;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.ByteArrayEntity;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.nio.charset.Charset;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpResponse;
 
 public class RestClient {
     private static final String BASE_URL = "http://c4wd.com/larat/";

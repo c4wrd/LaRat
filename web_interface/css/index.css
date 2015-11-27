@@ -1,8 +1,4 @@
 [class*="col-"] {
-    float: none;
-    display: table-cell;
-    vertical-align: top;
-    height: 600px;
     max-height: 600px;
 }
 
@@ -34,6 +30,7 @@
 
 .halfwidth {
   text-align: center;
+  width: 48%;
 }
 
 .third {
@@ -99,11 +96,11 @@
 }
 
 #client_number {
-  
+
 }
 
 #client_provider {
-  
+
 }
 
 #command-table td {

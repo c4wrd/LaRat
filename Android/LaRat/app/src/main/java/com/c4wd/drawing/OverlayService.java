@@ -55,9 +55,14 @@ public class OverlayService {
     }
 
     public void addView(View view) {
+        addView(view, true);
+    }
+
+    public void addView(View view, boolean add_to_list) {
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         windowManager.addView(view, this.layoutParams);
-        enabled_views.add(view);
+        if(add_to_list)
+            enabled_views.add(view);
     }
 
     public boolean removeView(int index) {
@@ -90,6 +95,14 @@ public class OverlayService {
 
     public void setY(int y) {
         layoutParams.y = y;
+    }
+
+    public void setHeight(int height) {
+        this.layoutParams.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.layoutParams.width = width;
     }
 
     public void setGravity(int gravity) {

@@ -2,15 +2,9 @@ package com.c4wd.larat;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
-
-import com.c4wd.commands.Command;
-import com.c4wd.commands.CommandContext;
-
-import java.util.LinkedList;
 
 public class LaRatActivity extends Activity {
 
