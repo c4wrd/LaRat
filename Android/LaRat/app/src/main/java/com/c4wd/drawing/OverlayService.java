@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import com.c4wd.larat.LaratException;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class OverlayService {
 
-    public static List<View> enabled_views = new LinkedList<View>();
+    private static List<View> enabled_views = new LinkedList<View>();
     private Context context;
     private  WindowManager.LayoutParams layoutParams;
     private WindowManager windowManager;
@@ -61,15 +62,16 @@ public class OverlayService {
     public void addView(View view, boolean add_to_list) {
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         windowManager.addView(view, this.layoutParams);
-        if(add_to_list)
+        if(add_to_list) {
             enabled_views.add(view);
+        }
     }
 
     public boolean removeView(int index) {
         if (index < enabled_views.size()) {
             View view = enabled_views.get(index);
             try {
-                this.getWindowManager().removeView(view);
+                this.windowManager.removeView(view);
                 enabled_views.remove(index);
                 return true;
             } catch (Exception ex) {
@@ -81,12 +83,16 @@ public class OverlayService {
     }
 
     public boolean removeAllViews() {
-        boolean complete = true;
-        for (View view : enabled_views) {
-            int index = enabled_views.indexOf(view);
-            complete = complete && removeView(index);
+        try {
+            for (View view : enabled_views) {
+                this.windowManager.removeViewImmediate(view);
+            }
+            this.enabled_views.clear();
+            return true;
+        } catch (Exception ex) {
+            LaratException.reportException(ex);
+            return false;
         }
-        return complete;
     }
 
     public void setX(int x) {
