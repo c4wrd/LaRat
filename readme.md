@@ -19,7 +19,7 @@ In the world of mobile phone security, Android is the leading platform in malwar
     - Get messages (display in web interface) ~~IN PROGRESS~~ *COMPLETE* (RC1)
     - Propietary animation *CANCELLED*
     - Screenshot Functionality *RESEARCHING*
-    - Camera Access *REMOVED* (RC1)
+    - Camera Access ~~*REMOVED*~~ *ADDED* (RC1)
     - Audio recording *REMOVED* (RC1)
     - Add Google form for passwords *IN PROGRESS*
  - Leverage the Parse callback API to remove all calls to the backend from clients *IN PROGRESS*
